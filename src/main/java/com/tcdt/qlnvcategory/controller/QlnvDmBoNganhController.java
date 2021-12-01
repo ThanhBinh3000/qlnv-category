@@ -46,7 +46,7 @@ public class QlnvDmBoNganhController extends BaseController {
 
 	@Autowired
 	private QlnvDmBoNganhRepository qlnvDmBoNganhRepository;
-
+	
 	@ApiOperation(value = "Lấy chi tiết thông tin bộ ngành", response = List.class)
 	@GetMapping(value = "/chi-tiet/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -54,6 +54,7 @@ public class QlnvDmBoNganhController extends BaseController {
 			@ApiParam(value = "ID bộ ngành", example = "1", required = true) @PathVariable("ids") String ids) {
 		Resp resp = new Resp();
 		try {
+			
 			if (StringUtils.isEmpty(ids))
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
 			Optional<QlnvDmBoNganh> qOptional = qlnvDmBoNganhRepository.findById(Long.parseLong(ids));

@@ -29,6 +29,8 @@ import com.tcdt.qlnvcategory.repository.catalog.QlnvDmTaisanRepository;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmTaisanReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmTaisanSearchReq;
 import com.tcdt.qlnvcategory.response.Resp;
+import com.tcdt.qlnvcategory.service.DonViService;
+import com.tcdt.qlnvcategory.table.catalog.QlnvDmDonvi;
 import com.tcdt.qlnvcategory.table.catalog.QlnvDmTaisan;
 import com.tcdt.qlnvcategory.util.Contains;
 import com.tcdt.qlnvcategory.util.PaginationSet;
@@ -46,6 +48,10 @@ public class QlnvDmTaisanController extends BaseController {
 
 	@Autowired
 	private QlnvDmTaisanRepository qlnvDmTaisanRepository;
+	
+	@Autowired 
+	DonViService donViService;
+	
 
 	@ApiOperation(value = "Lấy chi tiết thông tin tài sản", response = List.class)
 	@GetMapping(value = "/chi-tiet/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -73,13 +79,16 @@ public class QlnvDmTaisanController extends BaseController {
 	@ApiOperation(value = "Lấy danh sách tài sản", response = List.class)
 	@PostMapping(value = "/danh-sach", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> colection(@Valid @RequestBody QlnvDmTaisanSearchReq objReq) {
+	public ResponseEntity<Resp> colection(@Valid @RequestBody QlnvDmTaisanSearchReq objReq, HttpServletRequest req) {
 		Resp resp = new Resp();
 		try {
 			int page = PaginationSet.getPage(objReq.getPaggingReq().getPage());
 			int limit = PaginationSet.getLimit(objReq.getPaggingReq().getLimit());
 			Pageable pageable = PageRequest.of(page, limit, Sort.by("id").ascending());
 
+			//lay don vi thuoc user tu cache			
+			QlnvDmDonvi abc = donViService.getDonViById(Long.parseLong(getDvql(req)));
+			//TODO: truyn tham so don vi de lay ra sanh sach tai san dvi minh quan ly
 			Page<QlnvDmTaisan> data = qlnvDmTaisanRepository.selectParams(objReq.getMaTaisan(), objReq.getTenTaisan(),
 					objReq.getTrangThai(), pageable);
 			resp.setData(data);

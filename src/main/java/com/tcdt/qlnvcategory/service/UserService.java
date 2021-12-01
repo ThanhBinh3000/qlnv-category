@@ -13,6 +13,7 @@ import com.tcdt.qlnvcategory.repository.UserInfoRepository;
 import com.tcdt.qlnvcategory.table.UserAction;
 import com.tcdt.qlnvcategory.table.UserHistory;
 import com.tcdt.qlnvcategory.table.UserInfo;
+import com.tcdt.qlnvcategory.table.catalog.QlnvDmDonvi;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -23,6 +24,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	UserActionRepository userActionRepository;
+	
+	@Autowired 
+	DonViService donViService;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -30,6 +34,9 @@ public class UserService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
+		//cache thong tin don vi cua user dang nhap
+		QlnvDmDonvi abc = donViService.getDonViById(user.getDvql());
+		System.out.println(abc);
 		return new CustomUserDetails(user);
 	}
 
