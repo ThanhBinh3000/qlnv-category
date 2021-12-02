@@ -34,6 +34,10 @@ public class BaseController {
 		return allParams.get(nameParam);
 	}
 
+	public String getAuthorizationToken(HttpServletRequest request) {
+		return (String) request.getHeader("Authorization");
+	}
+
 	public Long getLongParams(Map<String, String> allParams, String nameParam) {
 		if (StringUtils.isEmpty(allParams.get(nameParam))) {
 			return null;

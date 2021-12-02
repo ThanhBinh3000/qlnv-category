@@ -24,8 +24,8 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	UserActionRepository userActionRepository;
-	
-	@Autowired 
+
+	@Autowired
 	DonViService donViService;
 
 	@Override
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException(username);
 		}
-		//cache thong tin don vi cua user dang nhap
+		// TODO:cache thong tin don vi cua user dang nhap
 		QlnvDmDonvi abc = donViService.getDonViById(user.getDvql());
 		System.out.println(abc);
 		return new CustomUserDetails(user);
