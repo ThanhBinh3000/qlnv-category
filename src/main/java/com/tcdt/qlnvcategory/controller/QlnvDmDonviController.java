@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import com.tcdt.qlnvcategory.request.DeleteRecordReq;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDonviReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDonviSearchReq;
 import com.tcdt.qlnvcategory.response.Resp;
+import com.tcdt.qlnvcategory.service.DonViService;
 import com.tcdt.qlnvcategory.table.catalog.QlnvDmDonvi;
 import com.tcdt.qlnvcategory.util.Contains;
 import com.tcdt.qlnvcategory.util.PaginationSet;
@@ -55,6 +57,9 @@ public class QlnvDmDonviController extends BaseController {
 	@Autowired
 	private QlnvDmDonviEntityRepository qDmDonviEntityRepository;
 
+	@Autowired
+	private DonViService donViService;
+
 	@ApiOperation(value = "Lấy chi tiết thông tin đơn vị", response = List.class)
 	@GetMapping(value = "/chi-tiet/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -63,10 +68,10 @@ public class QlnvDmDonviController extends BaseController {
 		try {
 			if (StringUtils.isEmpty(ids))
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-			Optional<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findById(Long.parseLong(ids));
-			if (!qOptional.isPresent())
+			QlnvDmDonvi dmDonvi = donViService.getDonViById(Long.parseLong(ids));
+			if (ObjectUtils.isEmpty(dmDonvi))
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-			resp.setData(qOptional);
+			resp.setData(dmDonvi);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
 		} catch (Exception e) {
@@ -260,6 +265,7 @@ public class QlnvDmDonviController extends BaseController {
 		}
 		return ResponseEntity.ok(resp);
 	}
+
 	@ApiOperation(value = "Lấy danh sách đơn vị con", response = List.class)
 	@PostMapping(value = "/ds-donvi-child", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
