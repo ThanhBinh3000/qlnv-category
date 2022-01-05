@@ -47,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping(value = "/dmuc-donvi")
+//TODO: sua thanh cotaint
 @Slf4j
 @Api(tags = "Danh mục đơn vị")
 public class QlnvDmDonviController extends BaseController {
@@ -60,6 +61,8 @@ public class QlnvDmDonviController extends BaseController {
 	@Autowired
 	private DonViService donViService;
 
+	// TODO: dat quy tac chung path, quản lý ở 1 fileURL_THEM="/them";
+	// URL_SUA="sua";
 	@ApiOperation(value = "Lấy chi tiết thông tin đơn vị", response = List.class)
 	@GetMapping(value = "/chi-tiet/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

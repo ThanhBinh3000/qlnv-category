@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tcdt.qlnvcategory.enums.EnumResponse;
 import com.tcdt.qlnvcategory.repository.catalog.QlnvDmDmucPhiBQuanRepository;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDMucPhiBQuanReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDMucPhiBQuanSearchReq;
@@ -50,7 +51,8 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 	@ApiOperation(value = "Lấy chi tiết thông tin định mức phí bảo quản", response = List.class)
 	@GetMapping(value = "/chi-tiet/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> detail(@ApiParam(value = "ID định mức phí bảo quản", example = "1", required = true) @PathVariable("ids") String ids) {
+	public ResponseEntity<Resp> detail(
+			@ApiParam(value = "ID định mức phí bảo quản", example = "1", required = true) @PathVariable("ids") String ids) {
 		Resp resp = new Resp();
 		try {
 			if (StringUtils.isEmpty(ids))
@@ -59,8 +61,8 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 			if (!qOptional.isPresent())
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
 			resp.setData(qOptional);
-			resp.setStatusCode(Contains.RESP_SUCC);
-			resp.setMsg("Thành công");
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
 		} catch (Exception e) {
 			resp.setStatusCode(Contains.RESP_FAIL);
 			resp.setMsg(e.getMessage());
@@ -79,11 +81,11 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 			int limit = PaginationSet.getLimit(objReq.getPaggingReq().getLimit());
 			Pageable pageable = PageRequest.of(page, limit, Sort.by("id").ascending());
 
-			Page<QlnvDmDMucPhiBQuan> data = dmDmucPhiBQuanRepository.selectParams(objReq.getNhomBquan(), objReq.getTenDmuc(),
-					objReq.getTrangThai(), pageable);
+			Page<QlnvDmDMucPhiBQuan> data = dmDmucPhiBQuanRepository.selectParams(objReq.getNhomBquan(),
+					objReq.getTenDmuc(), objReq.getTrangThai(), pageable);
 			resp.setData(data);
-			resp.setStatusCode(Contains.RESP_SUCC);
-			resp.setMsg("Thành công");
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
 		} catch (Exception e) {
 			resp.setStatusCode(Contains.RESP_FAIL);
 			resp.setMsg(e.getMessage());
@@ -100,7 +102,7 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 		try {
 
 			QlnvDmDMucPhiBQuan dataMap = new ModelMapper().map(objReq, QlnvDmDMucPhiBQuan.class);
-			
+
 			dataMap.setTrangThai(Contains.HOAT_DONG);
 			dataMap.setNguoiTao(getUserName(req));
 			dataMap.setNgayTao(new Date());
@@ -108,8 +110,8 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 			QlnvDmDMucPhiBQuan createCheck = dmDmucPhiBQuanRepository.save(dataMap);
 
 			resp.setData(createCheck);
-			resp.setStatusCode(Contains.RESP_SUCC);
-			resp.setMsg("Thành công");
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
 		} catch (Exception e) {
 			resp.setStatusCode(Contains.RESP_FAIL);
 			resp.setMsg(e.getMessage());
@@ -124,7 +126,7 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 	public ResponseEntity<Resp> edit(@Valid @RequestBody QlnvDmDMucPhiBQuanReq objReq, HttpServletRequest req) {
 		Resp resp = new Resp();
 		try {
-			Optional<QlnvDmDMucPhiBQuan> qOptional  = dmDmucPhiBQuanRepository.findById(objReq.getId());
+			Optional<QlnvDmDMucPhiBQuan> qOptional = dmDmucPhiBQuanRepository.findById(objReq.getId());
 
 			if (!qOptional.isPresent())
 				throw new UnsupportedOperationException("Định mức phí bảo quản không tồn tại");
@@ -140,8 +142,8 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 			QlnvDmDMucPhiBQuan createCheck = dmDmucPhiBQuanRepository.save(dataDTB);
 
 			resp.setData(createCheck);
-			resp.setStatusCode(Contains.RESP_SUCC);
-			resp.setMsg("Thành công");
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
 		} catch (Exception e) {
 			resp.setStatusCode(Contains.RESP_FAIL);
 			resp.setMsg(e.getMessage());
@@ -153,7 +155,8 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 	@ApiOperation(value = "Xóa định mức phí", response = List.class)
 	@GetMapping(value = "/xoa/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> delete(@ApiParam(value = "ID định mức", example = "1", required = true) @PathVariable("ids") String ids) {
+	public ResponseEntity<Resp> delete(
+			@ApiParam(value = "ID định mức", example = "1", required = true) @PathVariable("ids") String ids) {
 		Resp resp = new Resp();
 		try {
 			if (StringUtils.isEmpty(ids))
@@ -165,8 +168,8 @@ public class QlnvDmDmucPhiBQuanController extends BaseController {
 			dmDmucPhiBQuanRepository.delete(qOptional.get());
 
 			resp.setData(qOptional);
-			resp.setStatusCode(Contains.RESP_SUCC);
-			resp.setMsg("Thành công");
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
 		} catch (Exception e) {
 			resp.setStatusCode(Contains.RESP_FAIL);
 			resp.setMsg(e.getMessage());
