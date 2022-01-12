@@ -43,7 +43,7 @@ public class QlnvDmTaisanReq {
 	String maDvi;
 
 	@NotNull(message = "Không được để trống")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Contains.FORMAT_DATE_STR)
 	@Past
 	Date ngaySdung;
 

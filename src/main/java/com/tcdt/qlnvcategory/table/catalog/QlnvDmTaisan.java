@@ -10,6 +10,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tcdt.qlnvcategory.util.Contains;
 
 import lombok.Data;
 
@@ -27,7 +28,7 @@ public class QlnvDmTaisan {
 	String maDviTinh;
 	Long soLuong;
 	String maDvi;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Contains.FORMAT_DATE_STR)
 	Date ngaySdung;
 	String ghiChu;
 	String trangThai;
