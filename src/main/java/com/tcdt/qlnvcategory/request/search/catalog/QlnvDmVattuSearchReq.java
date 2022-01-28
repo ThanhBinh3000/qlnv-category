@@ -9,8 +9,13 @@ import lombok.Setter;
 @Setter
 public class QlnvDmVattuSearchReq extends BaseRequest{
 	@ApiModelProperty(example = "VT_1")
-	String maVtu;
-	@ApiModelProperty(example = "Tên vật tư 1")
-	String tenVtu;
-
+	String ma;
+	
+	@ApiModelProperty(example = "Tên hàng 1")
+	String ten;
+	
+	String maLoai;
+	
+	String qcpc;
+	
 }

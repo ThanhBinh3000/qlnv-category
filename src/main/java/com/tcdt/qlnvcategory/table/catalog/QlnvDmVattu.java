@@ -19,12 +19,18 @@ public class QlnvDmVattu {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QLNV_DM_COMMON_SEQ")
 	@SequenceGenerator(sequenceName = "QLNV_DM_COMMON_SEQ", allocationSize = 1, name = "QLNV_DM_COMMON_SEQ")
 	private Long id;
-	String maVtu;
-	String tenVtu;
+
 	String ghiChu;
-	String trangThai;
-	Date ngayTao;
-	String nguoiTao;
+	String ma;
 	Date ngaySua;
+	Date ngayTao;
 	String nguoiSua;
+	String nguoiTao;
+	String ten;
+	String trangThai;
+	String maCha;
+	String maDviTinh;
+	String maLoai;
+	String qcpc;
+
 }

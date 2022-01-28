@@ -12,20 +12,28 @@ import lombok.Data;
 public class QlnvDmVattuReq {
 	@ApiModelProperty(notes = "Bắt buộc set đối với update")
 	Long id;
-	
+
 	@NotNull(message = "Không được để trống")
-	@Size(max = 20, message = "Mã vật tư không được vượt quá 20 ký tự")
+	@Size(max = 20, message = "Mã hàng không được vượt quá 20 ký tự")
 	@ApiModelProperty(example = "VT_1")
-	String maVtu;
-	
+	String ma;
+
 	@NotNull(message = "Không được để trống")
-	@Size(max = 250, message = "Tên vật tư không được vượt quá 250 ký tự")
-	@ApiModelProperty(example = "Tên vật tư 1")
-	String tenVtu;
-	
+	@Size(max = 250, message = "Tên hàng không được vượt quá 250 ký tự")
+	@ApiModelProperty(example = "Tên hàng 1")
+	String ten;
+
 	@Size(max = 250, message = "Ghi chú không được vượt quá 250 ký tự")
 	String ghiChu;
-	
+
+	@NotNull(message = "Không được để trống")
+	@Size(max = 20, message = "Ghi chú không được vượt quá 20 ký tự")
+	String maLoai;
+
+	@NotNull(message = "Không được để trống")
+	@Size(max = 20, message = "Quy cách phẩm chất không được vượt quá 20 ký tự")
+	String qcpc;
+
 	@NotNull(message = "Không được để trống")
 	@Size(max = 2, message = "Trạng thái không được vượt quá 2 ký tự")
 	@ApiModelProperty(example = Contains.HOAT_DONG)
