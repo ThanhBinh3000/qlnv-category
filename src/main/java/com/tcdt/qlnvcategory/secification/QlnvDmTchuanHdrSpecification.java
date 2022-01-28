@@ -2,6 +2,7 @@ package com.tcdt.qlnvcategory.secification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -29,6 +30,8 @@ public class QlnvDmTchuanHdrSpecification {
 				String maHang = objReq.getMaHang();
 				String tenQchuan = objReq.getTenQchuan();
 				String trangThai = objReq.getTrangThai();
+
+				root.fetch("children", JoinType.LEFT);
 
 				if (StringUtils.isNotEmpty(maHang))
 					predicate.getExpressions()

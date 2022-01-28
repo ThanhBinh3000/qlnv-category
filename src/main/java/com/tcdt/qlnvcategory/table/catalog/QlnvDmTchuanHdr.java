@@ -10,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -24,6 +26,7 @@ import lombok.Data;
 @Entity
 @Table(name = "QLNV_DM_TCHUAN_HDR")
 @Data
+@NamedEntityGraph(name = "QLNV_DM_TCHUAN_HDR.children", attributeNodes = @NamedAttributeNode("children"))
 public class QlnvDmTchuanHdr {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QLNV_DM_COMMON_SEQ")
@@ -35,7 +38,7 @@ public class QlnvDmTchuanHdr {
 	Long namQchuan;
 	String loaiNx;
 	String trangThai;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	@Fetch(value = FetchMode.SUBSELECT)
 	@JoinColumn(name = "tcHdrId")
