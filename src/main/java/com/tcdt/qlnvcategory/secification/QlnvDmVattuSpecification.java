@@ -28,7 +28,6 @@ public class QlnvDmVattuSpecification {
 
 				String ma = objReq.getMa();
 				String ten = objReq.getTen();
-				String maLoai = objReq.getMaLoai();
 				String trangThai = objReq.getTrangThai();
 
 				if (StringUtils.isNotEmpty(ma))
@@ -38,10 +37,6 @@ public class QlnvDmVattuSpecification {
 				if (StringUtils.isNotEmpty(ten))
 					predicate.getExpressions()
 							.add(builder.like(builder.lower(root.get("ten")), "%" + ten.toLowerCase() + "%"));
-
-				if (StringUtils.isNotEmpty(maLoai))
-					predicate.getExpressions()
-							.add(builder.like(builder.lower(root.get("maLoai")), "%" + maLoai.toLowerCase() + "%"));
 
 				if (StringUtils.isNotBlank(trangThai))
 					predicate.getExpressions().add(builder.and(builder.equal(root.get("trangThai"), trangThai)));

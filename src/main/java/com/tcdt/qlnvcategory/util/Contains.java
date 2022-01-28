@@ -17,4 +17,8 @@ public class Contains {
 	public static final String NGUNG_HOAT_DONG = "02";
 	public static final String TAM_KHOA = "03";
 
+	// Loai nhap xuat
+	public static final String LOAI_NHAP = "N";
+	public static final String LOAI_XUAT = "X";
+
 }

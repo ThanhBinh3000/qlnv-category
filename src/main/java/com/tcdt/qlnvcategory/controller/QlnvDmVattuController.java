@@ -128,6 +128,11 @@ public class QlnvDmVattuController extends BaseController {
 
 			QlnvDmVattu dataMap = new ModelMapper().map(objReq, QlnvDmVattu.class);
 
+			QlnvDmVattu parentVattu = new QlnvDmVattu();
+			if (StringUtils.isNotEmpty(objReq.getMaCha()))
+				parentVattu = qlnvDmVattuRepository.findByMa(objReq.getMaCha());
+
+			dataMap.setParent(parentVattu);
 			dataMap.setTrangThai(
 					objReq.getTrangThai().equals(Contains.HOAT_DONG) ? Contains.HOAT_DONG : Contains.NGUNG_HOAT_DONG);
 			dataMap.setNguoiTao(getUserName(req));
@@ -159,6 +164,12 @@ public class QlnvDmVattuController extends BaseController {
 
 			QlnvDmVattu dataDTB = qOptional.get();
 			QlnvDmVattu dataMap = new ModelMapper().map(objReq, QlnvDmVattu.class);
+
+			QlnvDmVattu parentVattu = new QlnvDmVattu();
+			if (StringUtils.isNotEmpty(objReq.getMaCha()))
+				parentVattu = qlnvDmVattuRepository.findByMa(objReq.getMaCha());
+
+			dataMap.setParent(parentVattu);
 
 			updateObjectToObject(dataDTB, dataMap);
 

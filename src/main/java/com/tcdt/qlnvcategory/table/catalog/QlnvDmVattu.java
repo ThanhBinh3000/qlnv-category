@@ -2,10 +2,14 @@ package com.tcdt.qlnvcategory.table.catalog;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -28,9 +32,10 @@ public class QlnvDmVattu {
 	String nguoiTao;
 	String ten;
 	String trangThai;
-	String maCha;
 	String maDviTinh;
-	String maLoai;
-	String qcpc;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "maCha", referencedColumnName = "ma")
+	private QlnvDmVattu parent;
 
 }
