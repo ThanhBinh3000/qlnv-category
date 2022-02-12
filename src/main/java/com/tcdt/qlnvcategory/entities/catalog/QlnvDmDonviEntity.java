@@ -14,6 +14,7 @@ public class QlnvDmDonviEntity {
 	Long id;
 	String maDvi;
 	String maDviCha;
+	String tenDviCha;
 	String tenDvi;
 	String maHchinh;
 	String maTinh;

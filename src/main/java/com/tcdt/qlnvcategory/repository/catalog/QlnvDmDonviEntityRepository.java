@@ -11,7 +11,7 @@ import com.tcdt.qlnvcategory.entities.catalog.*;
 
 @Repository
 public interface QlnvDmDonviEntityRepository extends CrudRepository<QlnvDmDonviEntity, Long> {
-	String value = "SELECT t.id,t.ma_dvi,(select ten_dvi from QLNV_DM_DONVI where ma_dvi = t.ma_dvi_cha ) as MA_DVI_CHA, t.TEN_DVI, t.MA_HCHINH, "
+	String value = "SELECT t.id,t.ma_dvi,t.ma_dvi_cha,(select ten_dvi from QLNV_DM_DONVI where ma_dvi = t.ma_dvi_cha ) as TEN_DVI_CHA, t.TEN_DVI, t.MA_HCHINH, "
 			+ "(select ten_dbhc from qlnv_dm_dbhc where t.ma_tinh = ma_dbhc) as MA_TINH, "
 			+ "(select ten_dbhc from qlnv_dm_dbhc where t.ma_quan = ma_dbhc) as MA_QUAN, "
 			+ "(select ten_dbhc from qlnv_dm_dbhc where t.ma_phuong = ma_dbhc) as MA_PHUONG, "
@@ -34,7 +34,7 @@ public interface QlnvDmDonviEntityRepository extends CrudRepository<QlnvDmDonviE
 	Iterable<QlnvDmDonviEntity> finDvi(String maDvi, String tenDvi, String trangThai, String maTinh, String maQuan,
 			String maPhuong, String capDvi, String kieuDvi, String loaiDvi);
 
-	String value1 = "SELECT t.id,t.ma_dvi,(select ten_dvi from QLNV_DM_DONVI where ma_dvi = t.ma_dvi_cha ) as MA_DVI_CHA, t.TEN_DVI, t.MA_HCHINH, "
+	String value1 = "SELECT t.id,t.ma_dvi,t.ma_dvi_cha,(select ten_dvi from QLNV_DM_DONVI where ma_dvi = t.ma_dvi_cha ) as TEN_DVI_CHA, t.TEN_DVI, t.MA_HCHINH, "
 			+ "(select ten_dbhc from qlnv_dm_dbhc where t.ma_tinh = ma_dbhc) as MA_TINH, "
 			+ "(select ten_dbhc from qlnv_dm_dbhc where t.ma_quan = ma_dbhc) as MA_QUAN, "
 			+ "(select ten_dbhc from qlnv_dm_dbhc where t.ma_phuong = ma_dbhc) as MA_PHUONG, "
