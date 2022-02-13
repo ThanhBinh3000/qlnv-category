@@ -29,6 +29,7 @@ import com.tcdt.qlnvcategory.repository.catalog.QlnvDmDmucCcuRepository;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDmucCcuReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDmucCcuSearchReq;
 import com.tcdt.qlnvcategory.response.Resp;
+import com.tcdt.qlnvcategory.table.catalog.QlnvDmCongcu;
 import com.tcdt.qlnvcategory.table.catalog.QlnvDmDmucCcu;
 import com.tcdt.qlnvcategory.util.Contains;
 import com.tcdt.qlnvcategory.util.PaginationSet;
@@ -165,6 +166,24 @@ public class QlnvDmDmucCcuController extends BaseController {
 
 			qlnvDmDmucCcuRepository.delete(qOptional.get());
 
+			resp.setData(qOptional);
+			resp.setStatusCode(Contains.RESP_SUCC);
+			resp.setMsg("Thành công");
+		} catch (Exception e) {
+			resp.setStatusCode(Contains.RESP_FAIL);
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+	
+	@ApiOperation(value = "Lấy danh sách định mức công cụ đang hoạt động", response = List.class)
+	@GetMapping(value = "/danh-sach/tat-ca", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> collect() {
+		Resp resp = new Resp();
+		try {
+			Iterable<QlnvDmDmucCcu> qOptional = qlnvDmDmucCcuRepository.findByTrangThai(Contains.HOAT_DONG);
 			resp.setData(qOptional);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");

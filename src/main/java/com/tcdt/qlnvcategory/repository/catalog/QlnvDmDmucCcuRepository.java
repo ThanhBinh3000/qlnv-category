@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.tcdt.qlnvcategory.table.catalog.QlnvDmCongcu;
 import com.tcdt.qlnvcategory.table.catalog.QlnvDmDmucCcu;
 
 @Repository
@@ -21,5 +22,5 @@ public interface QlnvDmDmucCcuRepository extends CrudRepository<QlnvDmDmucCcu, L
 					+ "AND (:trangThai is null or t.TRANG_THAI = :trangThai)", nativeQuery = true)
 	Page<QlnvDmDmucCcu> selectParams(String capDvi, String nhomCcu, String loaiNhapxuat, String tenDinhmuc,
 			String trangThai, Pageable pageable);
-
+	Iterable<QlnvDmDmucCcu> findByTrangThai(String hoatDong);
 }
