@@ -216,4 +216,23 @@ public class QlnvDmVattuController extends BaseController {
 		}
 		return ResponseEntity.ok(resp);
 	}
+
+	@ApiOperation(value = "Lấy danh sách danh mục hàng theo mã cha", response = List.class)
+	@GetMapping(value = "/danh-sach/ma-cha/{maCha}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> recursive(
+			@ApiParam(value = "Mã vật tư lương thực", example = "0101", required = true) @PathVariable("maCha") String maCha) {
+		Resp resp = new Resp();
+		try {
+			Iterable<QlnvDmVattu> data = qlnvDmVattuRepository.findByMaChaCus(maCha, Contains.HOAT_DONG);
+			resp.setData(data);
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
+		} catch (Exception e) {
+			resp.setStatusCode(EnumResponse.RESP_FAIL.getValue());
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
 }
