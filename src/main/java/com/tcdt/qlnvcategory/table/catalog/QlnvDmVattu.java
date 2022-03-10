@@ -2,6 +2,7 @@ package com.tcdt.qlnvcategory.table.catalog;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,7 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -19,7 +22,8 @@ import lombok.Data;
 @Entity
 @Table(name = "QLNV_DM_VATTU")
 @Data
-public class QlnvDmVattu  implements Serializable {
+@NamedEntityGraph(name = "QLNV_DM_VATTU.children", attributeNodes = @NamedAttributeNode("children"))
+public class QlnvDmVattu implements Serializable {
 	/**
 	 * 
 	 */
@@ -39,9 +43,14 @@ public class QlnvDmVattu  implements Serializable {
 	String ten;
 	String trangThai;
 	String maDviTinh;
+	String maCha;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+//	@JoinColumn(name = "maCha", referencedColumnName = "ma")
+//	private QlnvDmVattu parent;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "maCha", referencedColumnName = "ma")
-	private QlnvDmVattu parent;
+	private List<QlnvDmVattu> children;
 
 }

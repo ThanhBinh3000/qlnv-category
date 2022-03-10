@@ -105,7 +105,9 @@ public class QlnvDmVattuController extends BaseController {
 	public ResponseEntity<Resp> colectionAll() {
 		Resp resp = new Resp();
 		try {
-			List<QlnvDmVattu> data = qlnvDmVattuRepository.findByTrangThai(Contains.HOAT_DONG);
+			QlnvDmVattuSearchReq objReq = new QlnvDmVattuSearchReq();
+			objReq.setTrangThai(Contains.HOAT_DONG);
+			List<QlnvDmVattu> data = qlnvDmVattuRepository.findAll(QlnvDmVattuSpecification.buildSearchQuery(objReq));
 			resp.setData(data);
 			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
 			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
@@ -132,7 +134,8 @@ public class QlnvDmVattuController extends BaseController {
 			if (StringUtils.isNotEmpty(objReq.getMaCha()))
 				parentVattu = qlnvDmVattuRepository.findByMa(objReq.getMaCha());
 
-			dataMap.setParent(parentVattu);
+//			dataMap.setParent(parentVattu);
+			dataMap.setMaCha(parentVattu.getMaCha());
 			dataMap.setTrangThai(
 					objReq.getTrangThai().equals(Contains.HOAT_DONG) ? Contains.HOAT_DONG : Contains.NGUNG_HOAT_DONG);
 			dataMap.setNguoiTao(getUserName(req));
@@ -169,7 +172,7 @@ public class QlnvDmVattuController extends BaseController {
 			if (StringUtils.isNotEmpty(objReq.getMaCha()))
 				parentVattu = qlnvDmVattuRepository.findByMa(objReq.getMaCha());
 
-			dataMap.setParent(parentVattu);
+			dataMap.setMaCha(parentVattu.getMaCha());
 
 			updateObjectToObject(dataDTB, dataMap);
 
