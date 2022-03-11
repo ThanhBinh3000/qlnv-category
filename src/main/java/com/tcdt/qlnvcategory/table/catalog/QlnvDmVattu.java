@@ -53,7 +53,7 @@ public class QlnvDmVattu implements Serializable {
 //	private QlnvDmVattu parent;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "ma", referencedColumnName = "maCha")
+	@JoinColumn(name = "maCha", referencedColumnName = "ma")
 	@JsonManagedReference
 	private List<QlnvDmVattu> children = new ArrayList<>();
 
