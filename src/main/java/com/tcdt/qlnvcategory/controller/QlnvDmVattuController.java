@@ -100,7 +100,7 @@ public class QlnvDmVattuController extends BaseController {
 		}
 		return ResponseEntity.ok(resp);
 	}
-
+//ds
 	@ApiOperation(value = "Lấy danh sách danh mục hàng", response = List.class)
 	@PostMapping(value = PathContains.URL_DANH_SACH, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -109,7 +109,7 @@ public class QlnvDmVattuController extends BaseController {
 		try {
 			QlnvDmVattuSearchReq objReq = new QlnvDmVattuSearchReq();
 			objReq.setTrangThai(Contains.HOAT_DONG);
-			List<QlnvDmVattu> data = qlnvDmVattuRepository.findAll(QlnvDmVattuSpecification.buildSearchQuery(objReq));
+			List<QlnvDmVattu> data = qlnvDmVattuRepository.findAll();
 			resp.setData(data);
 			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
 			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());

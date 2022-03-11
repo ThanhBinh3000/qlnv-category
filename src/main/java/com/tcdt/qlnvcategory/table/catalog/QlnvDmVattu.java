@@ -18,8 +18,10 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import com.tcdt.qlnvcategory.table.RolesPermission;
 import lombok.Data;
 
 @Entity
@@ -48,27 +50,37 @@ public class QlnvDmVattu implements Serializable {
 //	String maCha;
 	String cap;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+//	@ManyToOne(fetch = FetchType.LAZY)
+//	@JoinColumn(name = "ma_cha", referencedColumnName = "ma")
+//	@JsonBackReference
+//	private QlnvDmVattu parent;
+//
+//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+//	@JoinColumn(name = "ma_cha", referencedColumnName = "ma")
+//	@JsonManagedReference
+//	private List<QlnvDmVattu> children = new ArrayList<>();
+
+	@JsonIgnore
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "ma_cha", referencedColumnName = "ma")
-	@JsonBackReference
 	private QlnvDmVattu parent;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ma_cha", referencedColumnName = "ma")
-	@JsonManagedReference
-	private List<QlnvDmVattu> children = new ArrayList<>();
+	private List<QlnvDmVattu> child;
 
-	public void setChildren(List<QlnvDmVattu> children) {
-		this.children.clear();
-		for (QlnvDmVattu child : children) {
-			child.setParent(this);
-		}
-		this.children.addAll(children);
-	}
 
-	public void addChild(QlnvDmVattu child) {
-		child.setParent(this);
-		this.children.add(child);
-	}
+//	public void setChildren(List<QlnvDmVattu> children) {
+//		this.children.clear();
+//		for (QlnvDmVattu child : children) {
+//			child.setParent(this);
+//		}
+//		this.children.addAll(children);
+//	}
+//
+//	public void addChild(QlnvDmVattu child) {
+//		child.setParent(this);
+//		this.children.add(child);
+//	}
 
 }
