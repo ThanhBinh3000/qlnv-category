@@ -1,6 +1,7 @@
 package com.tcdt.qlnvcategory.table.catalog;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
 
@@ -49,8 +52,9 @@ public class QlnvDmVattu implements Serializable {
 //	@JoinColumn(name = "maCha", referencedColumnName = "ma")
 //	private QlnvDmVattu parent;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "maCha", referencedColumnName = "ma")
-	private List<QlnvDmVattu> children;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "ma", referencedColumnName = "maCha")
+	@JsonManagedReference
+	private List<QlnvDmVattu> children = new ArrayList<>();
 
 }

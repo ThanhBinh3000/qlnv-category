@@ -44,6 +44,8 @@ public class QlnvDmVattuSpecification {
 				if (StringUtils.isNotBlank(trangThai))
 					predicate.getExpressions().add(builder.and(builder.equal(root.get("trangThai"), trangThai)));
 
+				query.orderBy(builder.asc(root.get("id")));
+
 				return predicate;
 			}
 		};
