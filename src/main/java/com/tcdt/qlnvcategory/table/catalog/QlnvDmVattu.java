@@ -12,12 +12,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.NamedAttributeNode;
-import javax.persistence.NamedEntityGraph;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Data;
@@ -25,7 +25,6 @@ import lombok.Data;
 @Entity
 @Table(name = "QLNV_DM_VATTU")
 @Data
-@NamedEntityGraph(name = "QLNV_DM_VATTU.children", attributeNodes = @NamedAttributeNode("children"))
 public class QlnvDmVattu implements Serializable {
 	/**
 	 * 
@@ -46,15 +45,30 @@ public class QlnvDmVattu implements Serializable {
 	String ten;
 	String trangThai;
 	String maDviTinh;
-	String maCha;
+//	String maCha;
+	String cap;
 
-//	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
-//	@JoinColumn(name = "maCha", referencedColumnName = "ma")
-//	private QlnvDmVattu parent;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ma_cha", referencedColumnName = "ma")
+	@JsonBackReference
+	private QlnvDmVattu parent;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "maCha", referencedColumnName = "ma")
+	@JoinColumn(name = "ma_cha", referencedColumnName = "ma")
 	@JsonManagedReference
 	private List<QlnvDmVattu> children = new ArrayList<>();
+
+	public void setChildren(List<QlnvDmVattu> children) {
+		this.children.clear();
+		for (QlnvDmVattu child : children) {
+			child.setParent(this);
+		}
+		this.children.addAll(children);
+	}
+
+	public void addChild(QlnvDmVattu child) {
+		child.setParent(this);
+		this.children.add(child);
+	}
 
 }

@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tcdt.qlnvcategory.enums.EnumResponse;
 import com.tcdt.qlnvcategory.repository.catalog.QlnvDmVattuRepository;
+import com.tcdt.qlnvcategory.request.StrSearchReq;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmVattuReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmVattuSearchReq;
 import com.tcdt.qlnvcategory.response.Resp;
@@ -134,8 +136,10 @@ public class QlnvDmVattuController extends BaseController {
 			if (StringUtils.isNotEmpty(objReq.getMaCha()))
 				parentVattu = qlnvDmVattuRepository.findByMa(objReq.getMaCha());
 
-//			dataMap.setParent(parentVattu);
-			dataMap.setMaCha(parentVattu.getMaCha());
+			if (!ObjectUtils.isEmpty(parentVattu))
+				dataMap.setCap(String.valueOf((Integer.parseInt(parentVattu.getCap() + 1))));
+
+			dataMap.setParent(parentVattu);
 			dataMap.setTrangThai(
 					objReq.getTrangThai().equals(Contains.HOAT_DONG) ? Contains.HOAT_DONG : Contains.NGUNG_HOAT_DONG);
 			dataMap.setNguoiTao(getUserName(req));
@@ -172,7 +176,10 @@ public class QlnvDmVattuController extends BaseController {
 			if (StringUtils.isNotEmpty(objReq.getMaCha()))
 				parentVattu = qlnvDmVattuRepository.findByMa(objReq.getMaCha());
 
-			dataMap.setMaCha(parentVattu.getMaCha());
+			if (!ObjectUtils.isEmpty(parentVattu))
+				dataMap.setCap(String.valueOf((Integer.parseInt(parentVattu.getCap() + 1))));
+
+			dataMap.setParent(parentVattu);
 
 			updateObjectToObject(dataDTB, dataMap);
 
@@ -221,13 +228,35 @@ public class QlnvDmVattuController extends BaseController {
 	}
 
 	@ApiOperation(value = "Lấy danh sách danh mục hàng theo mã cha", response = List.class)
-	@GetMapping(value = "/danh-sach/ma-cha/{maCha}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/danh-sach/ma-cha", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> recursive(
-			@ApiParam(value = "Mã vật tư lương thực", example = "0101", required = true) @PathVariable("maCha") String maCha) {
+	public ResponseEntity<Resp> detailbycode(@Valid @RequestBody StrSearchReq objReq) {
 		Resp resp = new Resp();
 		try {
-			Iterable<QlnvDmVattu> data = qlnvDmVattuRepository.findByMaChaCus(maCha, Contains.HOAT_DONG);
+			String maCha = StringUtils.isEmpty(objReq.getStr()) ? null : objReq.getStr();
+			String cap = StringUtils.isEmpty(objReq.getStr()) ? "0" : null;
+
+			Iterable<QlnvDmVattu> data = qlnvDmVattuRepository.findByMaChaCus(maCha, cap, Contains.HOAT_DONG);
+
+			resp.setData(data);
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
+		} catch (Exception e) {
+			resp.setStatusCode(EnumResponse.RESP_FAIL.getValue());
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+
+	@ApiOperation(value = "Lấy danh sách danh mục hàng theo cấp", response = List.class)
+	@GetMapping(value = "/danh-sach/cap/{cap}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> recursiveLevel(
+			@ApiParam(value = "Cấp vật tư lương thực", example = "0", required = true) @PathVariable("cap") String cap) {
+		Resp resp = new Resp();
+		try {
+			Iterable<QlnvDmVattu> data = qlnvDmVattuRepository.findByCapAndTrangThai(cap, Contains.HOAT_DONG);
 			resp.setData(data);
 			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
 			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
