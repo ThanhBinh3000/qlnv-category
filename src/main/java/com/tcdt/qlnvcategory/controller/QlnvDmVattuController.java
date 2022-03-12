@@ -3,6 +3,8 @@ package com.tcdt.qlnvcategory.controller;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -109,7 +111,10 @@ public class QlnvDmVattuController extends BaseController {
 		try {
 			QlnvDmVattuSearchReq objReq = new QlnvDmVattuSearchReq();
 			objReq.setTrangThai(Contains.HOAT_DONG);
-			List<QlnvDmVattu> data = qlnvDmVattuRepository.findAll();
+			Iterable<QlnvDmVattu> data = qlnvDmVattuRepository.findParent();
+			List<QlnvDmVattu> result =
+					StreamSupport.stream(data.spliterator(), false)
+							.collect(Collectors.toList());
 			resp.setData(data);
 			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
 			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
