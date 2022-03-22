@@ -35,8 +35,8 @@ public class UserService implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 		}
 		// TODO:cache thong tin don vi cua user dang nhap
-		QlnvDmDonvi abc = donViService.getDonViById(user.getDvql());
-		System.out.println(abc);
+		//QlnvDmDonvi abc = donViService.getDonViById(user.getDvql());
+		//System.out.println(abc);
 		return new CustomUserDetails(user);
 	}
 
