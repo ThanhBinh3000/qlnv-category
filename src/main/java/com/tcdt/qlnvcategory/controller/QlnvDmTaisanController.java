@@ -87,7 +87,7 @@ public class QlnvDmTaisanController extends BaseController {
 			Pageable pageable = PageRequest.of(page, limit, Sort.by("id").ascending());
 
 			//lay don vi thuoc user tu cache			
-			QlnvDmDonvi abc = donViService.getDonViById(Long.parseLong(getDvql(req)));
+			//QlnvDmDonvi abc = donViService.getDonViById(Long.parseLong(getDvql(req)));
 			//TODO: truyn tham so don vi de lay ra sanh sach tai san dvi minh quan ly
 			Page<QlnvDmTaisan> data = qlnvDmTaisanRepository.selectParams(objReq.getMaTaisan(), objReq.getTenTaisan(),
 					objReq.getTrangThai(), pageable);
