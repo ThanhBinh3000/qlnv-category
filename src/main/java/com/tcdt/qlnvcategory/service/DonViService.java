@@ -17,8 +17,10 @@ public class DonViService {
 	private QlnvDmDonviRepository qlnvDmDonviRepository;
 
 	@Cacheable
-	public QlnvDmDonvi getDonViById(long maDvi) {
+	public QlnvDmDonvi getDonViById(long maDvi) throws Exception {
 		Optional<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findById(maDvi);
+		if (!qOptional.isPresent())
+			throw new Exception("Đơn vị không tồn tại.");
 		return qOptional.get();
 	}
 }
