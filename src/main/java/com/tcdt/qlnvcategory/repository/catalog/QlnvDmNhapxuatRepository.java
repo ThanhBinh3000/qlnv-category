@@ -30,4 +30,6 @@ public interface QlnvDmNhapxuatRepository extends CrudRepository<QlnvDmNhapxuat,
 
 	Iterable<QlnvDmNhapxuat> findByTrangThai(String hoatDong);
 
+	Iterable<QlnvDmNhapxuat> findByLoaiAndTrangThai(String loai, String hoatDong);
+
 }

@@ -27,4 +27,6 @@ public class QlnvDmNhapxuat {
 	String nguoiTao;
 	Date ngaySua;
 	String nguoiSua;
+	String loai;
+	String qdinhGia;
 }

@@ -223,4 +223,24 @@ public class QlnvDmNhapxuatController extends BaseController {
 		}
 		return ResponseEntity.ok(resp);
 	}
+
+	@ApiOperation(value = "Lấy danh sách loại hình nhập xuất đang hoạt động theo loại", response = List.class)
+	@GetMapping(value = "/danh-sach/tat-ca/{loai}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> collectForType(
+			@ApiParam(value = "Loại hình nhập xuất(N,X)", example = "1", required = true) @PathVariable("loai") String loai) {
+		Resp resp = new Resp();
+		try {
+			Iterable<QlnvDmNhapxuat> qOptional = qlnvDmNhapxuatRepository.findByLoaiAndTrangThai(loai,
+					Contains.HOAT_DONG);
+			resp.setData(qOptional);
+			resp.setStatusCode(Contains.RESP_SUCC);
+			resp.setMsg("Thành công");
+		} catch (Exception e) {
+			resp.setStatusCode(Contains.RESP_FAIL);
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
 }
