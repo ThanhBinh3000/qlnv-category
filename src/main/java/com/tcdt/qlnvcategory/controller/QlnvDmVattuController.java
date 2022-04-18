@@ -126,6 +126,29 @@ public class QlnvDmVattuController extends BaseController {
 		return ResponseEntity.ok(resp);
 	}
 
+	@ApiOperation(value = "Lấy danh sách danh mục hàng giao chỉ tiêu", response = List.class)
+	@PostMapping(value = "gct-vat-tu", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> colectionGct() {
+		Resp resp = new Resp();
+		try {
+			QlnvDmVattuSearchReq objReq = new QlnvDmVattuSearchReq();
+			objReq.setTrangThai(Contains.HOAT_DONG);
+			Iterable<QlnvDmVattu> data = qlnvDmVattuRepository.findVatTu();
+			List<QlnvDmVattu> result =
+					StreamSupport.stream(data.spliterator(), false)
+							.collect(Collectors.toList());
+			resp.setData(data);
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
+		} catch (Exception e) {
+			resp.setStatusCode(EnumResponse.RESP_FAIL.getValue());
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+
 	@ApiOperation(value = "Thêm mới danh mục hàng", response = List.class)
 	@PostMapping(value = PathContains.URL_TAO_MOI, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)

@@ -49,6 +49,9 @@ public class QlnvDmVattu implements Serializable {
 	String maDviTinh;
 //	String maCha;
 	String cap;
+	String chon;
+	String loaiHang;
+	String kyHieu;
 
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "ma_cha", referencedColumnName = "ma")
