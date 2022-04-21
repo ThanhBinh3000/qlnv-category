@@ -50,6 +50,16 @@ public class QlnvDmDonviReq {
 	
 	@Size(max = 250, message = "Ghi chú không được vượt quá 250 ký tự")
 	String ghiChu;
+	@Size(max = 20, message = "Mã quyết định không được vượt quá 20 ký tự")
+	String maQd;
+	@Size(max = 20, message = "Mã tờ trình không được vượt quá 20 ký tự")
+	String maTr;
+	@Size(max = 20, message = "Mã KH&QLH không được vượt quá 20 ký tự")
+	String maKhqlh;
+	@Size(max = 20, message = "Mã KTBQ không được vượt quá 20 ký tự")
+	String maKtbq;
+	@Size(max = 20, message = "Mã TCKT không được vượt quá 20 ký tự")
+	String maTckt;
 	
 	@NotNull(message = "Không được để trống")
 	@Size(max = 2, message = "Trạng thái không được vượt quá 2 ký tự")
