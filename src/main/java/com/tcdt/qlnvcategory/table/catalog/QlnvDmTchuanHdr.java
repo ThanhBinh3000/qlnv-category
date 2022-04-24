@@ -36,7 +36,6 @@ public class QlnvDmTchuanHdr {
 	String maHang;
 	String tenQchuan;
 	Long namQchuan;
-	String loaiNx;
 	String trangThai;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)

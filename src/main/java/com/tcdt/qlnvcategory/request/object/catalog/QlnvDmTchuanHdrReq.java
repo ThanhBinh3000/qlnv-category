@@ -17,7 +17,7 @@ public class QlnvDmTchuanHdrReq {
 
 	@NotNull(message = "Không được để trống")
 	@Size(max = 20, message = "Mã hàng không được vượt quá 20 ký tự")
-	@ApiModelProperty(example = "MHH001")
+	@ApiModelProperty(example = "010201")
 	String maHang;
 
 	@NotNull(message = "Không được để trống")
@@ -25,12 +25,8 @@ public class QlnvDmTchuanHdrReq {
 	@ApiModelProperty(example = "ISO2002")
 	String tenQchuan;
 
+	@ApiModelProperty(example = "2022")
 	Long namQchuan;
-
-	@NotNull(message = "Không được để trống")
-	@Size(max = 1, message = "Loại nhập xuất không được vượt quá 1 ký tự")
-	@ApiModelProperty(example = Contains.LOAI_NHAP)
-	String loaiNx;
 
 	@NotNull(message = "Không được để trống")
 	@Size(max = 2, message = "Trạng thái không được vượt quá 2 ký tự")

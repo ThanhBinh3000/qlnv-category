@@ -10,15 +10,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QlnvDmTchuanHdrSearchReq extends BaseRequest {
-	@ApiModelProperty(example = "MHH001")
+	@ApiModelProperty(example = "010201")
 	String maHang;
 
 	@ApiModelProperty(example = "IOS2002")
 	String tenQchuan;
 
-	@ApiModelProperty(example = Contains.LOAI_NHAP)
-	String loaiNx;
+	@ApiModelProperty(example = "2019")
+	String namQchuan;
 
-	@ApiModelProperty(example = Contains.MOI_TAO)
+	@ApiModelProperty(example = Contains.HOAT_DONG)
 	String trangThai;
 }

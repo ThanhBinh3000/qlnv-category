@@ -23,9 +23,12 @@ public class QlnvDmTchuanDtl {
 	@SequenceGenerator(sequenceName = "QLNV_DM_COMMON_SEQ", allocationSize = 1, name = "QLNV_DM_COMMON_SEQ")
 	private Long id;
 
-	String maTchuan;
 	String tenTchuan;
-	String chiSo;
+	String chiSoNhap;
+	String chiSoXuat;
+	String danhMuc;
+	String kieu;
+	Integer thuTu;
 	String phuongPhap;
 	String trangThai;
 
