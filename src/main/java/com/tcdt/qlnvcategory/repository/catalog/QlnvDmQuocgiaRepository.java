@@ -15,8 +15,8 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmQuocgia;
 
 @Repository
 public interface QlnvDmQuocgiaRepository extends CrudRepository<QlnvDmQuocgia, Long> {
-	@Query(value = "SELECT * FROM QLNV_DM_QUOCGIA t WHERE (:maQgia is null or lower(t.MA_QGIA) like lower(concat(concat('%', :maQgia),'%'))) "
-			+ "AND (:tenQgia is null or lower(t.TEN_QGIA) like lower(concat(concat('%', :tenQgia),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM QLNV_DM_QUOCGIA t "
+	@Query(value = "SELECT * FROM DM_QUOCGIA t WHERE (:maQgia is null or lower(t.MA_QGIA) like lower(concat(concat('%', :maQgia),'%'))) "
+			+ "AND (:tenQgia is null or lower(t.TEN_QGIA) like lower(concat(concat('%', :tenQgia),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM DM_QUOCGIA t "
 					+ "WHERE (:maQgia is null or lower(t.MA_QGIA) like lower(concat(concat('%', :maQgia),'%'))) "
 					+ "AND (:tenQgia is null or lower(t.TEN_QGIA) like lower(concat(concat('%', :tenQgia),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", nativeQuery = true)
 	Page<QlnvDmQuocgia> selectParams(String maQgia, String tenQgia, String trangThai, Pageable pageable);
@@ -25,7 +25,7 @@ public interface QlnvDmQuocgiaRepository extends CrudRepository<QlnvDmQuocgia, L
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM QLNV_DM_QUOCGIA u WHERE u.ID in ?1", nativeQuery = true)
+	@Query(value = "DELETE FROM DM_QUOCGIA u WHERE u.ID in ?1", nativeQuery = true)
 	int deleteWithIds(List<Long> items);
 
 }

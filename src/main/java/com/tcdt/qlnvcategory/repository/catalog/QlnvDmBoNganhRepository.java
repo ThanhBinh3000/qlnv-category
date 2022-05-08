@@ -10,8 +10,8 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmBoNganh;
 
 @Repository
 public interface QlnvDmBoNganhRepository extends CrudRepository<QlnvDmBoNganh, Long> {
-	@Query(value = "SELECT * FROM QLNV_DM_BO_NGANH t WHERE (:ma is null or lower(t.MA) like lower(concat(concat('%', :ma),'%'))) "
-			+ "AND (:ten is null or lower(t.TEN) like lower(concat(concat('%', :ten),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM QLNV_DM_BO_NGANH t "
+	@Query(value = "SELECT * FROM DM_BO_NGANH t WHERE (:ma is null or lower(t.MA) like lower(concat(concat('%', :ma),'%'))) "
+			+ "AND (:ten is null or lower(t.TEN) like lower(concat(concat('%', :ten),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM DM_BO_NGANH t "
 					+ "WHERE (:ma is null or lower(t.MA) like lower(concat(concat('%', :ma),'%'))) "
 					+ "AND (:ten is null or lower(t.TEN) like lower(concat(concat('%', :ten),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", nativeQuery = true)
 	Page<QlnvDmBoNganh> selectParams(String ma, String ten, String trangThai, Pageable pageable);

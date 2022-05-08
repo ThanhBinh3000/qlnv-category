@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 @Entity
-@Table(name = "QLNV_DM_TCHUAN_DTL")
+@Table(name = "DM_TCHUAN_DTL")
 @Data
 public class QlnvDmTchuanDtl {
 	@Id

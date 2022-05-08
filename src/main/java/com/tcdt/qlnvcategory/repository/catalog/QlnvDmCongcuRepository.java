@@ -10,8 +10,8 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmCongcu;
 
 @Repository
 public interface QlnvDmCongcuRepository extends CrudRepository<QlnvDmCongcu, Long> {
-	@Query(value = "SELECT * FROM QLNV_DM_CONGCU t WHERE (:maCcu is null or lower(t.MA_CCU) like lower(concat(concat('%', :maCcu),'%'))) "
-			+ "AND (:tenCcu is null or lower(t.TEN_CCU) like lower(concat(concat('%', :tenCcu),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM QLNV_DM_CONGCU t "
+	@Query(value = "SELECT * FROM DM_CONGCU t WHERE (:maCcu is null or lower(t.MA_CCU) like lower(concat(concat('%', :maCcu),'%'))) "
+			+ "AND (:tenCcu is null or lower(t.TEN_CCU) like lower(concat(concat('%', :tenCcu),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM DM_CONGCU t "
 					+ "WHERE (:maCcu is null or lower(t.MA_CCU) like lower(concat(concat('%', :maCcu),'%'))) "
 					+ "AND (:tenCcu is null or lower(t.TEN_CCU) like lower(concat(concat('%', :tenCcu),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", nativeQuery = true)
 	Page<QlnvDmCongcu> selectParams(String maCcu, String tenCcu, String trangThai, Pageable pageable);

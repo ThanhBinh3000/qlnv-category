@@ -24,9 +24,9 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 @Entity
-@Table(name = "QLNV_DM_TCHUAN_HDR")
+@Table(name = "DM_TCHUAN_HDR")
 @Data
-@NamedEntityGraph(name = "QLNV_DM_TCHUAN_HDR.children", attributeNodes = @NamedAttributeNode("children"))
+@NamedEntityGraph(name = "DM_TCHUAN_HDR.children", attributeNodes = @NamedAttributeNode("children"))
 public class QlnvDmTchuanHdr {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QLNV_DM_COMMON_SEQ")

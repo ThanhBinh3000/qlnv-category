@@ -15,7 +15,7 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmDviTinh;
 
 @Repository
 public interface QlnvDmDviTinhRepository extends CrudRepository<QlnvDmDviTinh, Long> {
-	@Query(value = "SELECT * FROM QLNV_DM_DVI_TINH t WHERE (:maDviTinh is null or lower(t.MA_DVI_TINH) like lower(concat(concat('%', :maDviTinh),'%'))) "
+	@Query(value = "SELECT * FROM DM_DVI_TINH t WHERE (:maDviTinh is null or lower(t.MA_DVI_TINH) like lower(concat(concat('%', :maDviTinh),'%'))) "
 			+ "AND (:tenDviTinh is null or lower(t.TEN_DVI_TINH) like lower(concat(concat('%', :tenDviTinh),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai) "
 			+ "AND (:kyHieu is null or lower(t.KY_HIEU) like lower(concat(concat('%', :kyHieu),'%'))) AND (:dviDo is null or lower(t.DVI_DO) like lower(concat(concat('%', :dviDo),'%')))", countQuery = "SELECT count(1) FROM QLNV_DM_DVI_TINH t "
 					+ "WHERE (:maDviTinh is null or lower(t.MA_DVI_TINH) like lower(concat(concat('%', :maDviTinh),'%'))) "

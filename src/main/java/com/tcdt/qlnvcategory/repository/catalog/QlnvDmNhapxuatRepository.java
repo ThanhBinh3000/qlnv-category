@@ -15,8 +15,8 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmNhapxuat;
 
 @Repository
 public interface QlnvDmNhapxuatRepository extends CrudRepository<QlnvDmNhapxuat, Long> {
-	@Query(value = "SELECT * FROM QLNV_DM_NHAPXUAT t WHERE (:maLhinh is null or lower(t.MA_LHINH) like lower(concat(concat('%', :maLhinh),'%'))) "
-			+ "AND (:tenLhinh is null or lower(t.TEN_LHINH) like lower(concat(concat('%', :tenLhinh),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM QLNV_DM_NHAPXUAT t "
+	@Query(value = "SELECT * FROM DM_NHAPXUAT t WHERE (:maLhinh is null or lower(t.MA_LHINH) like lower(concat(concat('%', :maLhinh),'%'))) "
+			+ "AND (:tenLhinh is null or lower(t.TEN_LHINH) like lower(concat(concat('%', :tenLhinh),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM DM_NHAPXUAT t "
 					+ "WHERE (:maLhinh is null or lower(t.MA_LHINH) like lower(concat(concat('%', :maLhinh),'%'))) "
 					+ "AND (:tenLhinh is null or lower(t.TEN_LHINH) like lower(concat(concat('%', :tenLhinh),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", nativeQuery = true)
 	Page<QlnvDmNhapxuat> selectParams(String maLhinh, String tenLhinh, String trangThai, Pageable pageable);
@@ -25,7 +25,7 @@ public interface QlnvDmNhapxuatRepository extends CrudRepository<QlnvDmNhapxuat,
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM QLNV_DM_NHAPXUAT u WHERE u.ID in ?1", nativeQuery = true)
+	@Query(value = "DELETE FROM DM_NHAPXUAT u WHERE u.ID in ?1", nativeQuery = true)
 	int deleteWithIds(List<Long> items);
 
 	Iterable<QlnvDmNhapxuat> findByTrangThai(String hoatDong);

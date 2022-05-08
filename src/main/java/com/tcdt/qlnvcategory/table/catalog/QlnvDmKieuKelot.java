@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "QLNV_DM_KIEU_KELOT")
+@Table(name = "DM_KIEU_KELOT")
 @Data
 public class QlnvDmKieuKelot {
 	@Id

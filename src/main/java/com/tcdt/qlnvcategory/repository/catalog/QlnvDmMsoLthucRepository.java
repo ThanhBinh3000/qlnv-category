@@ -10,8 +10,8 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmMsoLthuc;
 
 @Repository
 public interface QlnvDmMsoLthucRepository extends CrudRepository<QlnvDmMsoLthuc, Long> {
-	@Query(value = "SELECT * FROM QLNV_DM_MSO_LTHUC t WHERE (:maMsoLthuc is null or lower(t.MA_MSO_LTHUC) like lower(concat(concat('%', :maMsoLthuc),'%'))) "
-			+ "AND (:tenMsoLthuc is null or lower(t.TEN_MSO_LTHUC) like lower(concat(concat('%', :tenMsoLthuc),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM QLNV_DM_MSO_LTHUC t "
+	@Query(value = "SELECT * FROM DM_MSO_LTHUC t WHERE (:maMsoLthuc is null or lower(t.MA_MSO_LTHUC) like lower(concat(concat('%', :maMsoLthuc),'%'))) "
+			+ "AND (:tenMsoLthuc is null or lower(t.TEN_MSO_LTHUC) like lower(concat(concat('%', :tenMsoLthuc),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM DM_MSO_LTHUC t "
 					+ "WHERE (:maMsoLthuc is null or lower(t.MA_MSO_LTHUC) like lower(concat(concat('%', :maMsoLthuc),'%'))) "
 					+ "AND (:tenMsoLthuc is null or lower(t.TEN_MSO_LTHUC) like lower(concat(concat('%', :tenMsoLthuc),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", nativeQuery = true)
 	Page<QlnvDmMsoLthuc> selectParams(String maMsoLthuc, String tenMsoLthuc, String trangThai, Pageable pageable);
