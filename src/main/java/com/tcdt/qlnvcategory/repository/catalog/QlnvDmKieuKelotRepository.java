@@ -15,8 +15,8 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmKieuKelot;
 
 @Repository
 public interface QlnvDmKieuKelotRepository extends CrudRepository<QlnvDmKieuKelot, Long> {
-	@Query(value = "SELECT * FROM QLNV_DM_KIEU_KELOT t WHERE (:maKieuKelot is null or lower(t.MA_KIEU_KELOT) like lower(concat(concat('%', :maKieuKelot),'%'))) "
-			+ "AND (:tenKieuKelot is null or lower(t.TEN_KIEU_KELOT) like lower(concat(concat('%', :tenKieuKelot),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM QLNV_DM_KIEU_KELOT t "
+	@Query(value = "SELECT * FROM DM_KIEU_KELOT t WHERE (:maKieuKelot is null or lower(t.MA_KIEU_KELOT) like lower(concat(concat('%', :maKieuKelot),'%'))) "
+			+ "AND (:tenKieuKelot is null or lower(t.TEN_KIEU_KELOT) like lower(concat(concat('%', :tenKieuKelot),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", countQuery = "SELECT count(1) FROM DM_KIEU_KELOT t "
 					+ "WHERE (:maKieuKelot is null or lower(t.MA_KIEU_KELOT) like lower(concat(concat('%', :maKieuKelot),'%'))) "
 					+ "AND (:tenKieuKelot is null or lower(t.TEN_KIEU_KELOT) like lower(concat(concat('%', :tenKieuKelot),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai)", nativeQuery = true)
 	Page<QlnvDmKieuKelot> selectParams(String maKieuKelot, String tenKieuKelot, String trangThai, Pageable pageable);
@@ -25,7 +25,7 @@ public interface QlnvDmKieuKelotRepository extends CrudRepository<QlnvDmKieuKelo
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM QLNV_DM_KIEU_KELOT u WHERE u.ID in ?1", nativeQuery = true)
+	@Query(value = "DELETE FROM DM_KIEU_KELOT u WHERE u.ID in ?1", nativeQuery = true)
 	int deleteWithIds(List<Long> items);
 
 }

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "QLNV_DM_DBHC")
+@Table(name = "DM_DBHC")
 @Data
 public class QlnvDmDbhc implements Serializable {
 	/**

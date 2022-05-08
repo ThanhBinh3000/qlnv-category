@@ -17,7 +17,7 @@ import com.tcdt.qlnvcategory.table.catalog.QlnvDmDviTinh;
 public interface QlnvDmDviTinhRepository extends CrudRepository<QlnvDmDviTinh, Long> {
 	@Query(value = "SELECT * FROM DM_DVI_TINH t WHERE (:maDviTinh is null or lower(t.MA_DVI_TINH) like lower(concat(concat('%', :maDviTinh),'%'))) "
 			+ "AND (:tenDviTinh is null or lower(t.TEN_DVI_TINH) like lower(concat(concat('%', :tenDviTinh),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai) "
-			+ "AND (:kyHieu is null or lower(t.KY_HIEU) like lower(concat(concat('%', :kyHieu),'%'))) AND (:dviDo is null or lower(t.DVI_DO) like lower(concat(concat('%', :dviDo),'%')))", countQuery = "SELECT count(1) FROM QLNV_DM_DVI_TINH t "
+			+ "AND (:kyHieu is null or lower(t.KY_HIEU) like lower(concat(concat('%', :kyHieu),'%'))) AND (:dviDo is null or lower(t.DVI_DO) like lower(concat(concat('%', :dviDo),'%')))", countQuery = "SELECT count(1) FROM DM_DVI_TINH t "
 					+ "WHERE (:maDviTinh is null or lower(t.MA_DVI_TINH) like lower(concat(concat('%', :maDviTinh),'%'))) "
 					+ "AND (:tenDviTinh is null or lower(t.TEN_DVI_TINH) like lower(concat(concat('%', :tenDviTinh),'%'))) AND (:trangThai is null or t.TRANG_THAI = :trangThai) "
 					+ "AND (:kyHieu is null or lower(t.KY_HIEU) like lower(concat(concat('%', :kyHieu),'%'))) AND (:dviDo is null or lower(t.DVI_DO) like lower(concat(concat('%', :dviDo),'%')))", nativeQuery = true)
@@ -28,7 +28,7 @@ public interface QlnvDmDviTinhRepository extends CrudRepository<QlnvDmDviTinh, L
 
 	@Transactional
 	@Modifying
-	@Query(value = "DELETE FROM QLNV_DM_DVI_TINH u WHERE u.ID in ?1", nativeQuery = true)
+	@Query(value = "DELETE FROM DM_DVI_TINH u WHERE u.ID in ?1", nativeQuery = true)
 	int deleteWithIds(List<Long> ids);
 
 	Iterable<QlnvDmDviTinh> findByTrangThai(String hoatDong);

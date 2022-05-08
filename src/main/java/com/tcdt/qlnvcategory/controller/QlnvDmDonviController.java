@@ -85,7 +85,7 @@ public class QlnvDmDonviController extends BaseController {
 		}
 		return ResponseEntity.ok(resp);
 	}
-	@PreAuthorize("hasRole('DM_DV')")
+	//@PreAuthorize("hasRole('DM_DV')")
 	@ApiOperation(value = "Lấy danh sách đơn vị", response = List.class)
 	@PostMapping(value = "/danh-sach", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
@@ -106,6 +106,7 @@ public class QlnvDmDonviController extends BaseController {
 			resp.setStatusCode(Contains.RESP_FAIL);
 			resp.setMsg(e.getMessage());
 			log.error(e.getMessage());
+			e.printStackTrace();
 		}
 		return ResponseEntity.ok(resp);
 	}
