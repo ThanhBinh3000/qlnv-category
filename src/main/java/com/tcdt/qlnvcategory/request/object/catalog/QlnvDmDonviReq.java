@@ -60,6 +60,8 @@ public class QlnvDmDonviReq {
 	String maKtbq;
 	@Size(max = 20, message = "Mã TCKT không được vượt quá 20 ký tự")
 	String maTckt;
+	@Size(max = 20, message = "Mã QHNS không được vượt quá 20 ký tự")
+	String maQhns;
 	
 	@NotNull(message = "Không được để trống")
 	@Size(max = 2, message = "Trạng thái không được vượt quá 2 ký tự")
