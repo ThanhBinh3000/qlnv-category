@@ -49,5 +49,14 @@ public interface QlnvDmDonviEntityRepository extends CrudRepository<QlnvDmDonviE
 	List<QlnvDmDonviEntity> selectParamsChild(String maDvi, String trangThai, String maTinh, String maQuan,
 			String maPhuong, String capDvi, String kieuDvi, String loaiDvi);
 
-	Iterable<QlnvDmDonviEntity> findByMaDviChaAndTrangThai(String dvql, String trangThai);
+	String value2 = "SELECT t.id,t.ma_dvi,t.ma_dvi_cha,'' TEN_DVI_CHA, t.TEN_DVI, t.MA_HCHINH, "
+			+ "'' as MA_TINH, "
+			+ "'' as MA_QUAN, "
+			+ "'' as MA_PHUONG, "
+			+ "t.dia_chi, t.cap_dvi, t.kieu_dvi, t.loai_dvi, t.ghi_chu, t.trang_thai, t.ngay_tao,"
+			+ "t.nguoi_tao, t.ngay_sua, t.nguoi_sua FROM DM_DONVI t WHERE t.ma_dvi_cha  =:maDvi"
+			+ " AND (:trangThai is null or t.TRANG_THAI = :trangThai) ";
+
+	@Query(value = value2, nativeQuery = true)
+	Iterable<QlnvDmDonviEntity> findByMaDviChaAndTrangThai(String maDvi, String trangThai);
 }
