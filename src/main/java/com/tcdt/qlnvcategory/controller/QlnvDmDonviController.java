@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.tcdt.qlnvcategory.table.UserInfo;
+import com.tcdt.qlnvcategory.util.UserUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -272,14 +274,13 @@ public class QlnvDmDonviController extends BaseController {
 	}
 
 	@ApiOperation(value = "Lấy danh sách đơn vị con", response = List.class)
-	@PostMapping(value = "/ds-donvi-child", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/ds-donvi-child", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> colectionChild(@Valid @RequestBody QlnvDmDonviSearchReq objReq) {
+	public ResponseEntity<Resp> colectionChild() {
 		Resp resp = new Resp();
 		try {
-			List<QlnvDmDonviEntity> data = qDmDonviEntityRepository.selectParamsChild(objReq.getMaDvi(),
-					objReq.getTrangThai(), objReq.getMaTinh(), objReq.getMaQuan(), objReq.getMaPhuong(),
-					objReq.getCapDvi(), objReq.getKieuDvi(), objReq.getLoaiDvi());
+			UserInfo userInfo = UserUtils.getUserInfo();
+			Iterable<QlnvDmDonvi> data = qlnvDmDonviRepository.findByMaDviChaAndTrangThai(userInfo.getDvql(),Contains.HOAT_DONG);
 			resp.setData(data);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");

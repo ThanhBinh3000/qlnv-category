@@ -34,6 +34,8 @@ public interface QlnvDmDonviRepository extends CrudRepository<QlnvDmDonvi, Long>
 
 	QlnvDmDonvi findByMaDvi(String maDvi);
 
+	Iterable<QlnvDmDonvi> findByMaDviChaAndTrangThai(String dvql, String trangThai);
+
 	@Transactional
 	@Modifying
 	@Query(value = "DELETE FROM DM_DONVI u WHERE u.ID in ?1", nativeQuery = true)
