@@ -2,6 +2,7 @@ package com.tcdt.qlnvcategory.repository.catalog;
 
 import java.util.List;
 
+import com.tcdt.qlnvcategory.table.catalog.QlnvDmDonvi;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -47,4 +48,6 @@ public interface QlnvDmDonviEntityRepository extends CrudRepository<QlnvDmDonviE
 	@Query(value = value1, nativeQuery = true)
 	List<QlnvDmDonviEntity> selectParamsChild(String maDvi, String trangThai, String maTinh, String maQuan,
 			String maPhuong, String capDvi, String kieuDvi, String loaiDvi);
+
+	Iterable<QlnvDmDonviEntity> findByMaDviChaAndTrangThai(String dvql, String trangThai);
 }

@@ -280,7 +280,7 @@ public class QlnvDmDonviController extends BaseController {
 		Resp resp = new Resp();
 		try {
 			UserInfo userInfo = UserUtils.getUserInfo();
-			Iterable<QlnvDmDonvi> data = qlnvDmDonviRepository.findByMaDviChaAndTrangThai(userInfo.getDvql(),Contains.HOAT_DONG);
+			Iterable<QlnvDmDonviEntity> data = qDmDonviEntityRepository.findByMaDviChaAndTrangThai(userInfo.getDvql(),Contains.HOAT_DONG);
 			resp.setData(data);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");

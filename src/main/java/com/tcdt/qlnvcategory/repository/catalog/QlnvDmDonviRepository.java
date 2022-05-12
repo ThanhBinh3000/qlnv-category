@@ -34,7 +34,7 @@ public interface QlnvDmDonviRepository extends CrudRepository<QlnvDmDonvi, Long>
 
 	QlnvDmDonvi findByMaDvi(String maDvi);
 
-	Iterable<QlnvDmDonvi> findByMaDviChaAndTrangThai(String dvql, String trangThai);
+	//Iterable<QlnvDmDonvi> findByMaDviChaAndTrangThai(String dvql, String trangThai);
 
 	@Transactional
 	@Modifying
