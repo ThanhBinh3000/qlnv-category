@@ -141,7 +141,7 @@ public class QlnvDmDonviController extends BaseController {
 	}
 
 	@ApiOperation(value = "Xóa đơn vị", response = List.class)
-	@GetMapping(value = PathContains.URL_XOA+"/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = PathContains.URL_XOA+"/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Resp> delete(@PathVariable("ids") long ids) {
 		Resp resp = new Resp();

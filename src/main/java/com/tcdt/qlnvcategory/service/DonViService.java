@@ -59,7 +59,7 @@ public class DonViService extends BaseService  {
 		if (!qOptional.isPresent()){
 			throw new UnsupportedOperationException("Không tồn tại bản ghi");
 		}
-		if(qOptional.get().getChildren() != null || !qOptional.get().getChildren().isEmpty()){
+		if(qOptional.get().getChildren() != null && !qOptional.get().getChildren().isEmpty()){
 			throw new UnsupportedOperationException("Không thể xóa đơn vị có đơn vị con");
 		}
 		qlnvDmDonviRepository.delete(qOptional.get());
