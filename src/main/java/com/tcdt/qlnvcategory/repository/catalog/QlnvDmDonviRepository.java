@@ -42,4 +42,7 @@ public interface QlnvDmDonviRepository extends CrudRepository<QlnvDmDonvi, Long>
 	int deleteWithIds(List<Long> ids);
 
 	Iterable<QlnvDmDonvi> findByTrangThai(String trangThai);
+
+	Iterable<QlnvDmDonvi> findByMaDviChaIsNull();
+
 }

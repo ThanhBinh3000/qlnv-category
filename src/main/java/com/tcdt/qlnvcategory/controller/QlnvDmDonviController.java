@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.tcdt.qlnvcategory.table.UserInfo;
+import com.tcdt.qlnvcategory.util.PathContains;
 import com.tcdt.qlnvcategory.util.UserUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -23,13 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tcdt.qlnvcategory.entities.catalog.QlnvDmDonviEntity;
 import com.tcdt.qlnvcategory.repository.catalog.QlnvDmDonviEntityRepository;
@@ -67,16 +62,12 @@ public class QlnvDmDonviController extends BaseController {
 	// TODO: dat quy tac chung path, quản lý ở 1 fileURL_THEM="/them";
 	// URL_SUA="sua";
 	@ApiOperation(value = "Lấy chi tiết thông tin đơn vị", response = List.class)
-	@GetMapping(value = "/chi-tiet/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = PathContains.URL_CHI_TIET + "/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> detail(@PathVariable("ids") String ids) {
+	public ResponseEntity<Resp> detail(@PathVariable("ids") long ids) {
 		Resp resp = new Resp();
 		try {
-			if (StringUtils.isEmpty(ids))
-				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-			QlnvDmDonvi dmDonvi = donViService.getDonViById(Long.parseLong(ids));
-			if (ObjectUtils.isEmpty(dmDonvi))
-				throw new UnsupportedOperationException("Không tồn tại bản ghi");
+			QlnvDmDonvi dmDonvi = donViService.getDonViById(ids);
 			resp.setData(dmDonvi);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
@@ -114,27 +105,12 @@ public class QlnvDmDonviController extends BaseController {
 	}
 
 	@ApiOperation(value = "Thêm mới đơn vị", response = List.class)
-	@PostMapping(value = "/them-moi", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = PathContains.URL_TAO_MOI, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Resp> create(@Valid @RequestBody QlnvDmDonviReq objReq, HttpServletRequest req) {
 		Resp resp = new Resp();
 		try {
-			if (qlnvDmDonviRepository.findByMaDvi(objReq.getMaDvi()) != null)
-				throw new UnsupportedOperationException("Mã đơn vị đã tồn tại");
-
-			QlnvDmDonvi dataMap = new ModelMapper().map(objReq, QlnvDmDonvi.class);
-
-			QlnvDmDonvi parentDbhc = null;
-			if (StringUtils.isNotEmpty(objReq.getMaDviCha()))
-				parentDbhc = qlnvDmDonviRepository.findByMaDvi(objReq.getMaDviCha());
-
-			dataMap.setParent(parentDbhc);
-			dataMap.setTrangThai(Contains.HOAT_DONG);
-			dataMap.setNguoiTao(getUserName(req));
-			dataMap.setNgayTao(new Date());
-
-			QlnvDmDonvi createCheck = qlnvDmDonviRepository.save(dataMap);
-
+			QlnvDmDonvi createCheck = donViService.save(objReq,req);
 			resp.setData(createCheck);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
@@ -147,32 +123,12 @@ public class QlnvDmDonviController extends BaseController {
 	}
 
 	@ApiOperation(value = "Sửa chi tiết đơn vị", response = List.class)
-	@PostMapping(value = "/sua", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = PathContains.URL_CAP_NHAT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Resp> edit(@Valid @RequestBody QlnvDmDonviReq objReq, HttpServletRequest req) {
 		Resp resp = new Resp();
 		try {
-			Optional<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findById(objReq.getId());
-
-			if (!qOptional.isPresent())
-				throw new UnsupportedOperationException("Mã đơn vị không tồn tại");
-
-			QlnvDmDonvi dataDTB = qOptional.get();
-			QlnvDmDonvi dataMap = new ModelMapper().map(objReq, QlnvDmDonvi.class);
-
-			QlnvDmDonvi parentDbhc = null;
-			if (StringUtils.isNotEmpty(objReq.getMaDviCha()))
-				parentDbhc = qlnvDmDonviRepository.findByMaDvi(objReq.getMaDviCha());
-
-			dataMap.setParent(parentDbhc);
-
-			updateObjectToObject(dataDTB, dataMap);
-
-			dataDTB.setNguoiSua(getUserName(req));
-			dataDTB.setNgaySua(new Date());
-
-			QlnvDmDonvi createCheck = qlnvDmDonviRepository.save(dataDTB);
-
+			QlnvDmDonvi createCheck = donViService.update(objReq,req);
 			resp.setData(createCheck);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
@@ -185,20 +141,12 @@ public class QlnvDmDonviController extends BaseController {
 	}
 
 	@ApiOperation(value = "Xóa đơn vị", response = List.class)
-	@GetMapping(value = "/xoa/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = PathContains.URL_XOA+"/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> delete(@PathVariable("ids") String ids) {
+	public ResponseEntity<Resp> delete(@PathVariable("ids") long ids) {
 		Resp resp = new Resp();
 		try {
-			if (StringUtils.isEmpty(ids))
-				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-			Optional<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findById(Long.parseLong(ids));
-			if (!qOptional.isPresent())
-				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-
-			qlnvDmDonviRepository.delete(qOptional.get());
-
-			resp.setData(qOptional);
+			donViService.delete(ids);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
 		} catch (Exception e) {
@@ -234,12 +182,30 @@ public class QlnvDmDonviController extends BaseController {
 	}
 
 	@ApiOperation(value = "Lấy danh sách đơn vị đang hoạt động", response = List.class)
-	@GetMapping(value = "/danh-sach/tat-ca", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/danh-sach/hoat-dong", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Resp> collect() {
 		Resp resp = new Resp();
 		try {
 			Iterable<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findByTrangThai(Contains.HOAT_DONG);
+			resp.setData(qOptional);
+			resp.setStatusCode(Contains.RESP_SUCC);
+			resp.setMsg("Thành công");
+		} catch (Exception e) {
+			resp.setStatusCode(Contains.RESP_FAIL);
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+
+	@ApiOperation(value = "Lấy danh sách đơn vị đang hoạt động", response = List.class)
+	@GetMapping(value = PathContains.URL_DANH_SACH+"/dvi-cha", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> collectAll() {
+		Resp resp = new Resp();
+		try {
+			Iterable<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findByMaDviChaIsNull();
 			resp.setData(qOptional);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");

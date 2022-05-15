@@ -2,17 +2,9 @@ package com.tcdt.qlnvcategory.table.catalog;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Data;
 
@@ -29,8 +21,15 @@ public class QlnvDmDonvi implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QLNV_DM_COMMON_SEQ")
 	@SequenceGenerator(sequenceName = "QLNV_DM_COMMON_SEQ", allocationSize = 1, name = "QLNV_DM_COMMON_SEQ")
 	private Long id;
+	@Transient
+	String key;
+	@Transient
+	String title;
+	@Transient
+	boolean isLeaf = false;
+
 	String maDvi;
-//	String maDviCha;
+	String maDviCha;
 	String tenDvi;
 	String maHchinh;
 	String maTinh;
@@ -53,8 +52,20 @@ public class QlnvDmDonvi implements Serializable {
 	String maTckt;
 	String maQhns;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "maDviCha", referencedColumnName = "maDvi")
-	private QlnvDmDonvi parent;
+	private List<QlnvDmDonvi> children;
+
+	public String getKey() {
+		return maDvi;
+	}
+
+	public String getTitle() {
+		return tenDvi;
+	}
+
+	public boolean isIsLeaf() {
+		return children == null || children.isEmpty();
+	}
 
 }
