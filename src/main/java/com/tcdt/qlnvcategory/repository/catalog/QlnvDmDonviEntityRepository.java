@@ -54,9 +54,9 @@ public interface QlnvDmDonviEntityRepository extends CrudRepository<QlnvDmDonviE
 			+ "'' as MA_QUAN, "
 			+ "'' as MA_PHUONG, "
 			+ "t.dia_chi, t.cap_dvi, t.kieu_dvi, t.loai_dvi, t.ghi_chu, t.trang_thai, t.ngay_tao,"
-			+ "t.nguoi_tao, t.ngay_sua, t.nguoi_sua FROM DM_DONVI t WHERE t.ma_dvi_cha  =:maDvi"
+			+ "t.nguoi_tao, t.ngay_sua, t.nguoi_sua, " +
+			" '' ma_Qd , '' ma_Tr , '' ma_khqlh , '' ma_ktbq , '' ma_tckt , '' ma_qhns FROM DM_DONVI t WHERE t.ma_dvi_cha  =:maDvi"
 			+ " AND (:trangThai is null or t.TRANG_THAI = :trangThai) ";
-
 	@Query(value = value2, nativeQuery = true)
 	Iterable<QlnvDmDonviEntity> findByMaDviChaAndTrangThai(String maDvi, String trangThai);
 }
