@@ -20,10 +20,15 @@ public class DonViService extends BaseService  {
 	@Autowired
 	private QlnvDmDonviRepository qlnvDmDonviRepository;
 
-	public QlnvDmDonvi getDonViById(Long id) throws Exception {
-		Optional<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findById(id);
-		if (!qOptional.isPresent())
-			throw new Exception("Đơn vị không tồn tại.");
+	public QlnvDmDonvi getDonViById(String id) throws Exception {
+		Optional<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findById(Long.parseLong(id));
+		if (!qOptional.isPresent()){
+			Optional<QlnvDmDonvi> qOptionalMaDvi = qlnvDmDonviRepository.findByMaDvi(id);
+			if(!qOptionalMaDvi.isPresent()){
+				throw new Exception("Đơn vị không tồn tại.");
+			}
+			return qOptionalMaDvi.get();
+		}
 		return qOptional.get();
 	}
 

@@ -64,7 +64,7 @@ public class QlnvDmDonviController extends BaseController {
 	@ApiOperation(value = "Lấy chi tiết thông tin đơn vị", response = List.class)
 	@GetMapping(value = PathContains.URL_CHI_TIET + "/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> detail(@PathVariable("ids") long ids) {
+	public ResponseEntity<Resp> detail(@PathVariable("ids") String ids) {
 		Resp resp = new Resp();
 		try {
 			QlnvDmDonvi dmDonvi = donViService.getDonViById(ids);
@@ -225,7 +225,7 @@ public class QlnvDmDonviController extends BaseController {
 		try {
 			if (StringUtils.isEmpty(objReq.getStr()))
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-			QlnvDmDonvi qOptional = qlnvDmDonviRepository.findByMaDvi(objReq.getStr());
+			Optional<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findByMaDvi(objReq.getStr());
 			if (qOptional == null)
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
 			resp.setData(qOptional);

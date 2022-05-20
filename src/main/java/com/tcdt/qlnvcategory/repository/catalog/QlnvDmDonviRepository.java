@@ -1,6 +1,7 @@
 package com.tcdt.qlnvcategory.repository.catalog;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -32,7 +33,7 @@ public interface QlnvDmDonviRepository extends CrudRepository<QlnvDmDonvi, Long>
 	Page<QlnvDmDonviEntity> selectParams(String maDvi, String tenDvi, String trangThai, String maTinh, String maQuan,
 			String maPhuong, String capDvi, String kieuDvi, String loaiDvi, Pageable pageable);
 
-	QlnvDmDonvi findByMaDvi(String maDvi);
+	Optional<QlnvDmDonvi>  findByMaDvi(String maDvi);
 
 	//Iterable<QlnvDmDonvi> findByMaDviChaAndTrangThai(String dvql, String trangThai);
 
