@@ -1,10 +1,12 @@
 package com.tcdt.qlnvcategory.request.object.catalog;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tcdt.qlnvcategory.util.Contains;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -32,6 +34,10 @@ public class QlnvDmTchuanHdrReq {
 	@Size(max = 2, message = "Trạng thái không được vượt quá 2 ký tự")
 	@ApiModelProperty(example = Contains.HOAT_DONG)
 	String trangThai;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Contains.FORMAT_DATE_STR)
+	@NotNull(message = "Không được để trống")
+	Date ngayHieuLuc;
 
 	List<QlnvDmTchuanDtlReq> details;
 }
