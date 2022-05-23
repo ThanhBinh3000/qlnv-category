@@ -19,8 +19,8 @@ public class QlnvDmDonvi implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "QLNV_DM_COMMON_SEQ")
-	@SequenceGenerator(sequenceName = "QLNV_DM_COMMON_SEQ", allocationSize = 1, name = "QLNV_DM_COMMON_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DM_DONVI_SEQ")
+	@SequenceGenerator(sequenceName = "DM_DONVI_SEQ", allocationSize = 1, name = "DM_DONVI_SEQ")
 	private Long id;
 	@Transient
 	String key;
