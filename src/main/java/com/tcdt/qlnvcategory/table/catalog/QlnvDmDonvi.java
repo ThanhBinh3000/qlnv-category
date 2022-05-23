@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Entity
@@ -54,6 +55,7 @@ public class QlnvDmDonvi implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "maDviCha", referencedColumnName = "maDvi")
+	@JsonIgnore
 	private List<QlnvDmDonvi> children;
 
 	public String getKey() {
