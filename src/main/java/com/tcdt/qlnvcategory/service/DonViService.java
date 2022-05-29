@@ -1,9 +1,11 @@
 package com.tcdt.qlnvcategory.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDonviReq;
+import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDonviSearchReq;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
@@ -68,5 +70,9 @@ public class DonViService extends BaseService  {
 			throw new UnsupportedOperationException("Không thể xóa đơn vị có đơn vị con");
 		}
 		qlnvDmDonviRepository.delete(qOptional.get());
+	}
+
+	public List<QlnvDmDonvi> getAll(QlnvDmDonviSearchReq objReq){
+		return qlnvDmDonviRepository.selectAll(objReq.getCapDvi(),objReq.getTrangThai());
 	}
 }
