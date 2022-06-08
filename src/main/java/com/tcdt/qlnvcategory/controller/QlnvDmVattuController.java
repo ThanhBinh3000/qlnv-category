@@ -9,6 +9,8 @@ import java.util.stream.StreamSupport;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.tcdt.qlnvcategory.response.DMVatTuResponse;
+import com.tcdt.qlnvcategory.service.DanhMucVatTuService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -53,6 +55,9 @@ public class QlnvDmVattuController extends BaseController {
 
 	@Autowired
 	private QlnvDmVattuRepository qlnvDmVattuRepository;
+
+	@Autowired
+	private DanhMucVatTuService danhMucVatTuService;
 
 	@ApiOperation(value = "Lấy chi tiết thông tin danh mục hàng", response = List.class)
 	@GetMapping(value = PathContains.URL_CHI_TIET + "/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -285,6 +290,24 @@ public class QlnvDmVattuController extends BaseController {
 		Resp resp = new Resp();
 		try {
 			Iterable<QlnvDmVattu> data = qlnvDmVattuRepository.findByCapAndTrangThai(cap, Contains.HOAT_DONG);
+			resp.setData(data);
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
+		} catch (Exception e) {
+			resp.setStatusCode(EnumResponse.RESP_FAIL.getValue());
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+
+	@ApiOperation(value = "Lấy danh sách danh mục hàng theo đơn vị quản lý", response = List.class)
+	@GetMapping(value = "/danh-sach/dvql", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> getListByDvql() {
+		Resp resp = new Resp();
+		try {
+			List<DMVatTuResponse> data = danhMucVatTuService.getAllByDvql();
 			resp.setData(data);
 			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
 			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());

@@ -26,4 +26,7 @@ public interface QlnvDmVattuRepository extends BaseRepository<QlnvDmVattu, Long>
 	@Query(value = "SELECT * FROM DM_VATTU WHERE CHON = '01' AND LOAI_HANG= 'VT' AND TRANG_THAI = '01'", nativeQuery = true)
 	Iterable<QlnvDmVattu> findVatTu();
 
+	@Query(value = "SELECT * FROM DM_VATTU WHERE TRANG_THAI = '01' AND DVI_QLY = 'TCDT' ", nativeQuery = true)
+	List<QlnvDmVattu> findByDviQly();
+
 }
