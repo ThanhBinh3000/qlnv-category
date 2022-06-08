@@ -20,7 +20,7 @@ public interface QlnvDmVattuRepository extends BaseRepository<QlnvDmVattu, Long>
 	Iterable<QlnvDmVattu> findByCapAndTrangThai(String cap, String hoatDong);
 
 
-	@Query(value = "SELECT * FROM DM_VATTU WHERE MA_CHA is null AND TRANG_THAI = '01'", nativeQuery = true)
+	@Query(value = "SELECT * FROM DM_VATTU WHERE MA_CHA is null AND TRANG_THAI = '01' AND DVI_QLY = 'TCDT' ", nativeQuery = true)
 	Iterable<QlnvDmVattu> findParent();
 
 	@Query(value = "SELECT * FROM DM_VATTU WHERE CHON = '01' AND LOAI_HANG= 'VT' AND TRANG_THAI = '01'", nativeQuery = true)
