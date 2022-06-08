@@ -34,5 +34,6 @@ public class QlnvDanhMuc implements Serializable {
 	String nguoiSua;
 	Date ngaySua;
 	String loai;
+	Integer thuTuHienThi;
 
 }

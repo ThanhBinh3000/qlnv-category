@@ -8,6 +8,6 @@ public interface DanhMucRepository extends CrudRepository<QlnvDanhMuc, Long> {
 
 	Iterable<QlnvDanhMuc> findByTrangThai(String trangThai);
 
-	Iterable<QlnvDanhMuc> findByLoaiAndTrangThai(String loai, String trangThai);
+	Iterable<QlnvDanhMuc> findByLoaiAndTrangThaiOrderByThuTuHienThi(String loai, String trangThai);
 
 }

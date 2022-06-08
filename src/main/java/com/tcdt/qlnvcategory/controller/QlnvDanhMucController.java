@@ -40,7 +40,7 @@ public class QlnvDanhMucController extends BaseController {
 			if (StringUtils.isEmpty(loai))
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
 			
-			Iterable<QlnvDanhMuc> qOptional = danhMucRepository.findByLoaiAndTrangThai(loai, Contains.HOAT_DONG);
+			Iterable<QlnvDanhMuc> qOptional = danhMucRepository.findByLoaiAndTrangThaiOrderByThuTuHienThi(loai, Contains.HOAT_DONG);
 
 			resp.setData(qOptional);
 			resp.setStatusCode(Contains.RESP_SUCC);
