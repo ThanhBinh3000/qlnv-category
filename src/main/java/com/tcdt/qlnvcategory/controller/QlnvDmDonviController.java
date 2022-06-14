@@ -258,13 +258,30 @@ public class QlnvDmDonviController extends BaseController {
 		return ResponseEntity.ok(resp);
 	}
 
-	@ApiOperation(value = "Lấy tất cả các đơn vị", response = List.class)
+	@ApiOperation(value = "Lấy tất cả các đơn vị theo cấp đơn vị", response = List.class)
 	@PostMapping(value = PathContains.URL_TAT_CA, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Resp> getAll(@Valid @RequestBody QlnvDmDonviSearchReq objReq) {
 		Resp resp = new Resp();
 		try {
 			resp.setData(donViService.getAll(objReq));
+			resp.setStatusCode(Contains.RESP_SUCC);
+			resp.setMsg("Thành công");
+		} catch (Exception e) {
+			resp.setStatusCode(Contains.RESP_FAIL);
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+
+	@ApiOperation(value = "Lấy tất cả các đơn vị theo cấp đơn vị", response = List.class)
+	@GetMapping(value = PathContains.URL_TAT_CA+ "/{capDvi}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> getAllByLevel(@PathVariable("capDvi") String capDvi) {
+		Resp resp = new Resp();
+		try {
+			resp.setData(donViService.getAllByLevel(capDvi,"01"));
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
 		} catch (Exception e) {
