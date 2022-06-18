@@ -79,4 +79,7 @@ public class DonViService extends BaseService  {
 	public List<QlnvDmDonvi> getAllByLevel(String capDvi, String trangThai){
 		return qlnvDmDonviRepository.selectAll(capDvi,trangThai);
 	}
+	public List<QlnvDmDonvi> getAllTree(String objReq){
+		return qlnvDmDonviRepository.selectAllTree(objReq);
+	}
 }
