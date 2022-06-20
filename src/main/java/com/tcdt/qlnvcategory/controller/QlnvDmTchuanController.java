@@ -142,6 +142,31 @@ public class QlnvDmTchuanController extends BaseController {
 		return ResponseEntity.ok(resp);
 	}
 
+	@ApiOperation(value = "Lấy chi tiết thông tin tiêu chuẩn kỹ thuật", response = List.class)
+	@GetMapping(value = PathContains.URL_CHI_TIET + "/ma-hh/{loaiVthh}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> detailByLoaiVthh(
+			@ApiParam(value = "ID tiêu chuẩn kỹ thuật", example = "1", required = true) @PathVariable("loaiVthh") String loaiVthh) {
+		Resp resp = new Resp();
+		try {
+			if (StringUtils.isEmpty(loaiVthh))
+				throw new UnsupportedOperationException("Không tồn tại bản ghi");
+
+			QlnvDmTchuanHdr qOptional = qlnvDmTchuanHdrRepository.findByMaHang(loaiVthh);
+			if (qOptional == null)
+				throw new UnsupportedOperationException("Không tồn tại bản ghi");
+
+			resp.setData(qOptional);
+			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
+			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
+		} catch (Exception e) {
+			resp.setStatusCode(EnumResponse.RESP_FAIL.getValue());
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+
 	@ApiOperation(value = "Tra cứu tiêu chuẩn kỹ thuật", response = List.class)
 	@PostMapping(value = PathContains.URL_TRA_CUU, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
