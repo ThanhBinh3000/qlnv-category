@@ -149,13 +149,7 @@ public class QlnvDmTchuanController extends BaseController {
 			@ApiParam(value = "ID tiêu chuẩn kỹ thuật", example = "1", required = true) @PathVariable("loaiVthh") String loaiVthh) {
 		Resp resp = new Resp();
 		try {
-			if (StringUtils.isEmpty(loaiVthh))
-				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-
 			QlnvDmTchuanHdr qOptional = qlnvDmTchuanHdrRepository.findByMaHang(loaiVthh);
-			if (qOptional == null)
-				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-
 			resp.setData(qOptional);
 			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
 			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
