@@ -27,4 +27,9 @@ public interface QlnvDmDviLquanRepository extends CrudRepository<QlnvDmDviLquan,
 	@Query(value = "DELETE FROM DM_DVI_LQUAN u WHERE u.ID in ?1", nativeQuery = true)
 	int deleteWithIds(List<Long> ids);
 
+	@Query(value = "SELECT * FROM DM_DVI_LQUAN DVI " +
+			" WHERE (:typeDvi IS NULL OR DVI.TYPE = :typeDvi) " +
+			" AND (:trangThai IS NULL OR DVI.TRANG_THAI = :trangThai)", nativeQuery = true)
+	List<QlnvDmDviLquan> selectAll(String typeDvi, String trangThai);
+
 }

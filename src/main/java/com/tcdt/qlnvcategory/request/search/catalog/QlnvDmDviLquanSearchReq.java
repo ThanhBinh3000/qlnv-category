@@ -14,4 +14,6 @@ public class QlnvDmDviLquanSearchReq extends BaseRequest{
 	String tenDvi;
 	@ApiModelProperty(example = "Mã hành chính đơn vị liên quan 1")
 	String maHchinh;
+
+	String typeDvi;
 }

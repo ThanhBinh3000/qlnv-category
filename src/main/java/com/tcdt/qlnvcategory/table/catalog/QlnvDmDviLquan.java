@@ -29,4 +29,11 @@ public class QlnvDmDviLquan {
 	String nguoiTao;
 	Date ngaySua;
 	String nguoiSua;
+	String type;
+	Long version;
+	String mst;
+	String sdt;
+	String stk;
+	String nguoiDdien;
+	String chucVu;
 }

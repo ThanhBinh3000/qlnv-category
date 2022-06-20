@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.tcdt.qlnvcategory.service.DmDviLquanService;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,9 @@ public class QlnvDmDviLquanController extends BaseController {
 
 	@Autowired
 	private QlnvDmDviLquanRepository qlnvDmDviLquanRepository;
+
+	@Autowired
+	private DmDviLquanService dmDviLquanService;
 
 	@ApiOperation(value = "Lấy chi tiết thông tin đơn vị liên quan", response = List.class)
 	@GetMapping(value = "/chi-tiet/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -196,6 +200,23 @@ public class QlnvDmDviLquanController extends BaseController {
 
 			qlnvDmDviLquanRepository.deleteWithIds(items);
 
+			resp.setStatusCode(Contains.RESP_SUCC);
+			resp.setMsg("Thành công");
+		} catch (Exception e) {
+			resp.setStatusCode(Contains.RESP_FAIL);
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
+
+	@ApiOperation(value = "Lấy danh sách đơn vị liên quan", response = List.class)
+	@PostMapping(value = "/tat-ca" , produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> getAll(@Valid @RequestBody QlnvDmDviLquanSearchReq objReq) {
+		Resp resp = new Resp();
+		try {
+			resp.setData(dmDviLquanService.getAll(objReq));
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
 		} catch (Exception e) {
