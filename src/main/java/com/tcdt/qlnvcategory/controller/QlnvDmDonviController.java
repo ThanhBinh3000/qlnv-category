@@ -291,4 +291,21 @@ public class QlnvDmDonviController extends BaseController {
 		}
 		return ResponseEntity.ok(resp);
 	}
+
+	@ApiOperation(value = "Lấy tất cả các đơn vị theo tree", response = List.class)
+	@PostMapping(value = "/tat-ca-tree", produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<Resp> getAllTree(String maDvi) {
+		Resp resp = new Resp();
+		try {
+			resp.setData(donViService.getAllTree(maDvi));
+			resp.setStatusCode(Contains.RESP_SUCC);
+			resp.setMsg("Thành công");
+		} catch (Exception e) {
+			resp.setStatusCode(Contains.RESP_FAIL);
+			resp.setMsg(e.getMessage());
+			log.error(e.getMessage());
+		}
+		return ResponseEntity.ok(resp);
+	}
 }
