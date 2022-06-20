@@ -17,4 +17,5 @@ public class QlnvDmDonviSearchReq extends BaseRequest{
 	String capDvi;
 	String kieuDvi;
 	String loaiDvi;
+	String maDviCha;
 }

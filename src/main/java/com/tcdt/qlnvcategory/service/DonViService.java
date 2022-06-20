@@ -73,10 +73,10 @@ public class DonViService extends BaseService  {
 	}
 
 	public List<QlnvDmDonvi> getAll(QlnvDmDonviSearchReq objReq){
-		return qlnvDmDonviRepository.selectAll(objReq.getCapDvi(),objReq.getTrangThai());
+		return qlnvDmDonviRepository.selectAll(objReq.getCapDvi(),objReq.getMaDviCha(),objReq.getTrangThai());
 	}
 
 	public List<QlnvDmDonvi> getAllByLevel(String capDvi, String trangThai){
-		return qlnvDmDonviRepository.selectAll(capDvi,trangThai);
+		return qlnvDmDonviRepository.selectAll(capDvi,null,trangThai);
 	}
 }
