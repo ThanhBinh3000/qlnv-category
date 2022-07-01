@@ -73,11 +73,15 @@ public class DonViService extends BaseService  {
 	}
 
 	public List<QlnvDmDonvi> getAll(QlnvDmDonviSearchReq objReq){
-		return qlnvDmDonviRepository.selectAll(objReq.getCapDvi(),objReq.getMaDviCha(),objReq.getTrangThai());
+		List<QlnvDmDonvi> dataMap = qlnvDmDonviRepository.selectAll(objReq.getCapDvi(),objReq.getMaDviCha(),objReq.getTrangThai());
+		dataMap.forEach( item -> item.setChildren(null));
+		return dataMap;
 	}
 
 	public List<QlnvDmDonvi> getAllByLevel(String capDvi, String trangThai){
-		return qlnvDmDonviRepository.selectAll(capDvi,null,trangThai);
+		List<QlnvDmDonvi> dataMap =  qlnvDmDonviRepository.selectAll(capDvi,null,trangThai);
+		dataMap.forEach( item -> item.setChildren(null));
+		return dataMap;
 	}
 	public List<QlnvDmDonvi> getAllTree(String objReq){
 		return qlnvDmDonviRepository.selectAllTree(objReq);
