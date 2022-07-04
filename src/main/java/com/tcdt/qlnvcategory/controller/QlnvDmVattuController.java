@@ -68,12 +68,17 @@ public class QlnvDmVattuController extends BaseController {
 		try {
 			if (StringUtils.isEmpty(ids))
 				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-
+			QlnvDmVattu data = new QlnvDmVattu();
 			Optional<QlnvDmVattu> qOptional = qlnvDmVattuRepository.findById(Long.parseLong(ids));
-			if (!qOptional.isPresent())
-				throw new UnsupportedOperationException("Không tồn tại bản ghi");
-
-			resp.setData(qOptional);
+			if (!qOptional.isPresent()){
+				data = qlnvDmVattuRepository.findByMa(ids);
+				if(ObjectUtils.isEmpty(data)){
+					throw new UnsupportedOperationException("Không tồn tại bản ghi");
+				}
+			}else{
+				data = qOptional.get();
+			}
+			resp.setData(data);
 			resp.setStatusCode(EnumResponse.RESP_SUCC.getValue());
 			resp.setMsg(EnumResponse.RESP_SUCC.getDescription());
 		} catch (Exception e) {
