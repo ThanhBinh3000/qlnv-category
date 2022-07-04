@@ -295,10 +295,10 @@ public class QlnvDmDonviController extends BaseController {
 	@ApiOperation(value = "Lấy tất cả các đơn vị theo tree", response = List.class)
 	@PostMapping(value = "/tat-ca-tree", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> getAllTree(String maDvi) {
+	public ResponseEntity<Resp> getAllTree(@Valid @RequestBody QlnvDmDonviSearchReq objReq) {
 		Resp resp = new Resp();
 		try {
-			resp.setData(donViService.getAllTree(maDvi));
+			resp.setData(donViService.getAllTree(objReq));
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
 		} catch (Exception e) {

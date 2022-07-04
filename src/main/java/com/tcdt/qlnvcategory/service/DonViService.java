@@ -83,7 +83,7 @@ public class DonViService extends BaseService  {
 		dataMap.forEach( item -> item.setChildren(null));
 		return dataMap;
 	}
-	public List<QlnvDmDonvi> getAllTree(String objReq){
-		return qlnvDmDonviRepository.selectAllTree(objReq);
+	public List<QlnvDmDonvi> getAllTree(QlnvDmDonviSearchReq objReq){
+		return qlnvDmDonviRepository.selectAllTree(objReq.getMaDviCha(),objReq.getTrangThai());
 	}
 }

@@ -57,6 +57,6 @@ public interface QlnvDmDonviRepository extends CrudRepository<QlnvDmDonvi, Long>
 
 	@Query(value = "SELECT * FROM DM_DONVI DVI " +
 			" WHERE ((:maDvi IS NULL AND DVI.MA_DVI_CHA IS NULL) OR DVI.MA_DVI = :maDvi) " +
-			" AND DVI.TRANG_THAI = '01'", nativeQuery = true)
-	List<QlnvDmDonvi> selectAllTree( String maDvi);
+			" AND(:trangThai IS NULL OR DVI.TRANG_THAI = :trangThai) ", nativeQuery = true)
+	List<QlnvDmDonvi> selectAllTree( String maDvi, String trangThai);
 }
