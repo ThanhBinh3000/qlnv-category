@@ -72,6 +72,12 @@ public class DonViService extends BaseService  {
 		qlnvDmDonviRepository.delete(qOptional.get());
 	}
 
+	public List<QlnvDmDonvi> findByTrangThai(String status){
+		List<QlnvDmDonvi> dataMap = qlnvDmDonviRepository.findByTrangThai(status);
+		dataMap.forEach( item -> item.setChildren(null));
+		return dataMap;
+	}
+
 	public List<QlnvDmDonvi> getAll(QlnvDmDonviSearchReq objReq){
 		List<QlnvDmDonvi> dataMap = qlnvDmDonviRepository.selectAll(objReq.getCapDvi(),objReq.getMaDviCha(),objReq.getTrangThai());
 		dataMap.forEach( item -> item.setChildren(null));

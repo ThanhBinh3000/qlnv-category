@@ -45,12 +45,12 @@ public interface QlnvDmDonviRepository extends CrudRepository<QlnvDmDonvi, Long>
 	@Query(value = "SELECT * " +
 			" FROM DM_DONVI DV " +
 			"WHERE DV.CAP_DVI < 4 AND DV.TRANG_THAI = :trangThai", nativeQuery = true)
-	Iterable<QlnvDmDonvi> findByTrangThai(String trangThai);
+	List<QlnvDmDonvi> findByTrangThai(String trangThai);
 
 	Iterable<QlnvDmDonvi> findByMaDviChaIsNull();
 
 	@Query(value = "SELECT * FROM DM_DONVI DVI " +
-			" WHERE (:capDvi IS NULL OR DVI.CAP_DVI <= TO_NUMBER(:capDvi)) " +
+			" WHERE (:capDvi IS NULL OR DVI.CAP_DVI = TO_NUMBER(:capDvi)) " +
 			" AND (:trangThai IS NULL OR DVI.TRANG_THAI = :trangThai)" +
 			" AND (:maDviCha IS NULL OR DVI.MA_DVI_CHA = :maDviCha)", nativeQuery = true)
 	List<QlnvDmDonvi> selectAll( String capDvi,String maDviCha, String trangThai);

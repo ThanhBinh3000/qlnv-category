@@ -187,7 +187,7 @@ public class QlnvDmDonviController extends BaseController {
 	public ResponseEntity<Resp> collect() {
 		Resp resp = new Resp();
 		try {
-			Iterable<QlnvDmDonvi> qOptional = qlnvDmDonviRepository.findByTrangThai(Contains.HOAT_DONG);
+			Iterable<QlnvDmDonvi> qOptional = donViService.findByTrangThai(Contains.HOAT_DONG);
 			resp.setData(qOptional);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
