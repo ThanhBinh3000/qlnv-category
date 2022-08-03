@@ -2,11 +2,14 @@ package com.tcdt.qlnvcategory.request;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PaggingReq {
 	@NotNull(message = "Không được để trống")
 	@ApiModelProperty(example = "20")

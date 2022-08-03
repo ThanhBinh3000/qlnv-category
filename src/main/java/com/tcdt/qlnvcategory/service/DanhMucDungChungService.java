@@ -4,10 +4,8 @@ import com.tcdt.qlnvcategory.repository.catalog.DanhMucRepository;
 import com.tcdt.qlnvcategory.request.PaggingReq;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDungChungReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDungChungSearchReq;
-import com.tcdt.qlnvcategory.table.catalog.DmPhanLoaiDc;
 import com.tcdt.qlnvcategory.table.catalog.QlnvDanhMuc;
-//import com.tcdt.qlnvcategory.util.ExportExcel;
-import com.tcdt.qlnvcategory.util.PaginationSet;
+import com.tcdt.qlnvcategory.util.ExportExcel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
@@ -128,8 +125,8 @@ public class DanhMucDungChungService extends BaseService {
             dataList.add(objs);
 
         }
-//        ExportExcel ex =new ExportExcel(title,fileName,rowsName,dataList,response);
-//        ex.export();
+        ExportExcel ex =new ExportExcel(title,fileName,rowsName,dataList,response);
+        ex.export();
     }
 
 }

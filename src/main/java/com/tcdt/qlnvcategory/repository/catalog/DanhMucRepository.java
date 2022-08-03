@@ -22,15 +22,6 @@ public interface DanhMucRepository extends CrudRepository<QlnvDanhMuc, Long> {
             "AND   (:loai IS NULL OR LOWER(dm.LOAI) = :loai)",
             nativeQuery = true)
     Page<QlnvDanhMuc> selectPage(String ma, String maCha, String trangThai, String giaTri, String loai, Pageable pageable);
-//    @Query(value ="SELECT * FROM DM_DUNG_CHUNG DM WHERE (:ma IS NULL OR LOWER(DM.MA)=:ma )"
-//            +"AND (:maCha IS NULL OR LOWER(DM.MA_CHA) =:maCha )"
-//            +"AND (:trangThai IS NULL OR LOWER(DM.TRANG_THAI)  = :trangThai )"
-//            +"AND (:giaTri IS NULL OR LOWER(DM.GIA_TRI) =:giaTri )"
-//            +"AND (:loai IS NULL OR LOWER(DM.LOAI) =:loai )"
-//            , nativeQuery = true)
-//    Page<QlnvDanhMuc> selectPage(String ma, String maCha, String trangThai, String giaTri, String loai, Pageable pageable);
-
-
     Iterable<QlnvDanhMuc> findByTrangThai(String trangThai);
 
     Iterable<QlnvDanhMuc> findByLoaiAndTrangThaiOrderByThuTuHienThi(String loai, String trangThai);

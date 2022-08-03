@@ -1,40 +1,25 @@
 package com.tcdt.qlnvcategory.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tcdt.qlnvcategory.request.PaggingReq;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDungChungReq;
-import com.tcdt.qlnvcategory.request.search.catalog.DmPhanLoaiDcSearchReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDungChungSearchReq;
 import com.tcdt.qlnvcategory.service.DanhMucDungChungService;
-import com.tcdt.qlnvcategory.table.catalog.DmPhanLoaiDc;
-//import com.tcdt.qlnvcategory.util.ExportExcel;
-import com.tcdt.qlnvcategory.util.PaginationSet;
 import com.tcdt.qlnvcategory.util.PathContains;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.tcdt.qlnvcategory.repository.catalog.DanhMucRepository;
 import com.tcdt.qlnvcategory.response.Resp;
 import com.tcdt.qlnvcategory.table.catalog.QlnvDanhMuc;
 import com.tcdt.qlnvcategory.util.Contains;
-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -190,7 +175,7 @@ public class QlnvDanhMucController extends BaseController {
 	public final ResponseEntity<Resp> deleteMulti(@Valid @RequestBody QlnvDmDungChungSearchReq objReq) {
 		Resp resp = new Resp();
 		try {
-//			danhMucDungChungService.deleteListId(objReq.getIdList());
+			danhMucDungChungService.deleteListId(objReq.getIdList());
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
 		} catch (Exception e) {
@@ -201,28 +186,28 @@ public class QlnvDanhMucController extends BaseController {
 		return ResponseEntity.ok(resp);
 	}
 
-//	@ApiOperation(value = "Kết xuất danh sách danh mục dùng chung", response = List.class)
-//	@PostMapping(value= PathContains.URL_KIET_XUAT, produces = MediaType.APPLICATION_JSON_VALUE)
-//	@ResponseStatus(HttpStatus.OK)
-//	public void exportListQdBtcTcdtToExcel(@Valid @RequestBody QlnvDmDungChungSearchReq objReq,HttpServletResponse response) throws Exception{
-//
-//		try {
-//			danhMucDungChungService.exportList(objReq,response);
-//		} catch (Exception e) {
-//
-//			log.error("Kết xuất danh sách danh mục dùng chung trace: {}", e);
-//			final Map<String, Object> body = new HashMap<>();
-//			body.put("statusCode", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-//			body.put("msg", e.getMessage());
-//
-//			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//			response.setCharacterEncoding("UTF-8");
-//
-//			final ObjectMapper mapper = new ObjectMapper();
-//			mapper.writeValue(response.getOutputStream(), body);
-//		}
-//
-//	}
+	@ApiOperation(value = "Kết xuất danh sách danh mục dùng chung", response = List.class)
+	@PostMapping(value= PathContains.URL_KIET_XUAT, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public void exportListQdBtcTcdtToExcel(@Valid @RequestBody QlnvDmDungChungSearchReq objReq,HttpServletResponse response) throws Exception{
+
+		try {
+			danhMucDungChungService.exportList(objReq,response);
+		} catch (Exception e) {
+
+			log.error("Kết xuất danh sách danh mục dùng chung trace: {}", e);
+			final Map<String, Object> body = new HashMap<>();
+			body.put("statusCode", HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			body.put("msg", e.getMessage());
+
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+			response.setCharacterEncoding("UTF-8");
+
+			final ObjectMapper mapper = new ObjectMapper();
+			mapper.writeValue(response.getOutputStream(), body);
+		}
+
+	}
 
 
 
