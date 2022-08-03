@@ -1,10 +1,11 @@
 package com.tcdt.qlnvcategory.service;
 
 import com.tcdt.qlnvcategory.repository.catalog.DanhMucRepository;
+import com.tcdt.qlnvcategory.request.PaggingReq;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDungChungReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDungChungSearchReq;
 import com.tcdt.qlnvcategory.table.catalog.QlnvDanhMuc;
-import com.tcdt.qlnvcategory.util.PaginationSet;
+import com.tcdt.qlnvcategory.util.ExportExcel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -33,22 +35,17 @@ public class DanhMucDungChungService extends BaseService {
     }
 
 
-    public Page<QlnvDanhMuc> getAll(QlnvDmDungChungSearchReq req) {
-        try {
-            int page = PaginationSet.getPage(req.getPaggingReq().getPage());
-            int limit = PaginationSet.getLimit(req.getPaggingReq().getLimit());
-            Pageable pageable = PageRequest.of(page, limit);
-
-            Page<QlnvDanhMuc> result = repository.selectParams(req.getMa(), req.getMaCha(), req.getTrangThai(),
-                    req.getGiaTri(), req.getLoai(), pageable);
-
-            return result;
-        } catch (
-                Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
+    public Page<QlnvDanhMuc> searchPage(QlnvDmDungChungSearchReq objReq) {
+            Pageable pageable= PageRequest.of(objReq.getPaggingReq().getPage(),
+                    objReq.getPaggingReq().getLimit(), Sort.by("id").ascending());
+            Page<QlnvDanhMuc> data = repository.selectPage(
+                    objReq.getMa(),
+                    objReq.getMaCha(),
+                    objReq.getTrangThai(),
+                    objReq.getGiaTri(),
+                    objReq.getLoai(),
+                    pageable);
+            return data;
     }
 
     public QlnvDanhMuc getById(Long id) {
@@ -96,5 +93,40 @@ public class DanhMucDungChungService extends BaseService {
         repository.delete(qOptional.get());
     }
 
+    public void deleteListId(List<Long> listId){
+        repository.deleteAllByIdIn(listId);
+    }
+
+    public void exportList(QlnvDmDungChungSearchReq objReq, HttpServletResponse response) throws Exception{
+        PaggingReq paggingReq = new PaggingReq();
+        paggingReq.setPage(0);
+        paggingReq.setLimit(Integer.MAX_VALUE);
+        objReq.setPaggingReq(paggingReq);
+        Page<QlnvDanhMuc> page=this.searchPage(objReq);
+        List<QlnvDanhMuc> data=page.getContent();
+
+        String title="Danh sách danh mục dùng chung";
+        String[] rowsName=new String[]{"STT","Vùng dữ liệu/ Loại danh mục dùng chung","Mã","Giá trị","Trạng thái","Người tạo","Ngày tạo","Người sửa","Ngày sửa"};
+        String fileName="danh-sach-danh-muc-dung-chung.xlsx";
+        List<Object[]> dataList = new ArrayList<Object[]>();
+        Object[] objs=null;
+        for (int i=0;i<data.size();i++){
+            QlnvDanhMuc dx=data.get(i);
+            objs=new Object[rowsName.length];
+            objs[0]=i;
+            objs[1]=dx.getLoai();
+            objs[2]=dx.getMa();
+            objs[3]=dx.getGiaTri();
+            objs[4]=dx.getTrangThai();
+            objs[5]=dx.getNguoiTao();
+            objs[6]=dx.getNgayTao();
+            objs[7]=dx.getNguoiSua();
+            objs[8]=dx.getNgaySua();
+            dataList.add(objs);
+
+        }
+        ExportExcel ex =new ExportExcel(title,fileName,rowsName,dataList,response);
+        ex.export();
+    }
 
 }
