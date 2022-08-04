@@ -2,16 +2,20 @@ package com.tcdt.qlnvcategory.service;
 
 import com.tcdt.qlnvcategory.repository.catalog.DmPhanLoaiDcRepository;
 import com.tcdt.qlnvcategory.request.object.catalog.DmPhanLoaiDcReq;
+import com.tcdt.qlnvcategory.request.search.catalog.DmPhanLoaiDcSearchReq;
 import com.tcdt.qlnvcategory.table.catalog.DmPhanLoaiDc;
 import com.tcdt.qlnvcategory.util.Contains;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +26,18 @@ public class DmPhanLoaiDcService extends  BaseService {
 
     public Iterable<DmPhanLoaiDc> findAll(@Valid DmPhanLoaiDcReq objReq) {
         return dmPhanLoaiDcRepository.findAll();
+    }
+
+    public Page<DmPhanLoaiDc> searchPage(DmPhanLoaiDcSearchReq objReq)throws Exception{
+        Pageable pageable= PageRequest.of(objReq.getPaggingReq().getPage(),
+                objReq.getPaggingReq().getLimit(),
+                Sort.by("id").ascending());
+        Page<DmPhanLoaiDc> data= dmPhanLoaiDcRepository.selectParams(
+                objReq.getMaPloai(),
+                objReq.getTenPloai(),
+                objReq.getTrangThai(),
+                pageable);
+        return data;
     }
 
     public DmPhanLoaiDc save(DmPhanLoaiDcReq objReq, HttpServletRequest req) throws Exception{
@@ -62,5 +78,15 @@ public class DmPhanLoaiDcService extends  BaseService {
             throw new Exception("Danh mục phân loại dùng chung không tồn tại ");
         }
         return qOptional.get();
+    }
+
+
+    public int softDelete(Long ids) {
+        return dmPhanLoaiDcRepository.softDelete(ids);
+    }
+
+
+    public List<DmPhanLoaiDc> selectTrangThai() {
+        return dmPhanLoaiDcRepository.selectTrangThai();
     }
 }
