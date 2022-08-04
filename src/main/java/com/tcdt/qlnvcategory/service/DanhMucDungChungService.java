@@ -92,9 +92,19 @@ public class DanhMucDungChungService extends BaseService {
         }
         repository.delete(qOptional.get());
     }
+    public int softDelete(Long ids) {
+        Optional<QlnvDanhMuc> qOptional = repository.findById(ids);
+        if (!qOptional.isPresent()) {
+            throw new UnsupportedOperationException("Không tồn tại bản ghi");
+        }
+        return repository.softDelete(ids);
+    }
+
 
     public void deleteListId(List<Long> listId){
-        repository.deleteAllByIdIn(listId);
+        for (Long lisID : listId) {
+            repository.softDelete(lisID);
+        }
     }
 
     public void exportList(QlnvDmDungChungSearchReq objReq, HttpServletResponse response) throws Exception{

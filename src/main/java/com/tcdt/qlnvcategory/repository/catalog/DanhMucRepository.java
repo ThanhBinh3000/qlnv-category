@@ -5,11 +5,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
 import com.tcdt.qlnvcategory.table.catalog.QlnvDanhMuc;
-
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 public interface DanhMucRepository extends CrudRepository<QlnvDanhMuc, Long> {
@@ -32,7 +29,8 @@ public interface DanhMucRepository extends CrudRepository<QlnvDanhMuc, Long> {
 
     @Transactional
     @Modifying
-    void deleteAllByIdIn(List<Long> ids);
+    @Query(value= "UPDATE DM_DUNG_CHUNG pl SET pl.TRANG_THAI ='00' WHERE pl.ID=?",nativeQuery = true)
+    int  softDelete(Long ids);
 
 
 }

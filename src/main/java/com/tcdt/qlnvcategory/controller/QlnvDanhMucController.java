@@ -8,6 +8,7 @@ import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDungChungReq;
 import com.tcdt.qlnvcategory.request.search.catalog.QlnvDmDungChungSearchReq;
 import com.tcdt.qlnvcategory.service.DanhMucDungChungService;
 import com.tcdt.qlnvcategory.util.PathContains;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -156,10 +157,10 @@ public class QlnvDanhMucController extends BaseController {
 	@ApiOperation(value = "Xóa danh mục dùng chung", response = List.class)
 	@PostMapping(value = PathContains.URL_XOA + "/{ids}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<Resp> delete(@PathVariable("ids") long ids) {
+	public ResponseEntity<Resp> delete(@ApiParam(value = "ID danh mục dùng chung") @PathVariable("ids") long ids) {
 		Resp resp = new Resp();
 		try {
-			danhMucDungChungService.delete(ids);
+			danhMucDungChungService.softDelete(ids);
 			resp.setStatusCode(Contains.RESP_SUCC);
 			resp.setMsg("Thành công");
 		} catch (Exception e) {

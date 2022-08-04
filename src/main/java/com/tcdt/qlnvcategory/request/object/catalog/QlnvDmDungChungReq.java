@@ -3,7 +3,7 @@ package com.tcdt.qlnvcategory.request.object.catalog;
 import com.tcdt.qlnvcategory.util.Contains;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,6 +13,7 @@ public class QlnvDmDungChungReq {
     Long id;
 
     @NotNull(message = "Không được để trống")
+    @Column(unique = true)
     String ma;
 
     @Size(max = 20, message = "Mã cha không được vượt quá 20 ký tự")
