@@ -1,5 +1,6 @@
 package com.tcdt.qlnvcategory.service;
 
+import com.tcdt.qlnvcategory.enums.QlnvDanhMucEnum;
 import com.tcdt.qlnvcategory.repository.catalog.DanhMucRepository;
 import com.tcdt.qlnvcategory.request.PaggingReq;
 import com.tcdt.qlnvcategory.request.object.catalog.QlnvDmDungChungReq;
@@ -45,6 +46,9 @@ public class DanhMucDungChungService extends BaseService {
                     objReq.getGiaTri(),
                     objReq.getLoai(),
                     pageable);
+            data.getContent().forEach(f->{
+                f.setTenTrangThai(QlnvDanhMucEnum.getTrangThaiDuyetById(f.getTrangThai()));
+            });
             return data;
     }
 
@@ -73,6 +77,9 @@ public class DanhMucDungChungService extends BaseService {
 
         if (!qOptional.isPresent()) {
             throw new UnsupportedOperationException("Không tồn tại bản ghi");
+        }
+        if (repository.findByMa(objReq.getMa()) != null) {
+            throw new UnsupportedOperationException("Mã danh mục chung đã tồn tại");
         }
 
         QlnvDanhMuc dataDTB = qOptional.get();
@@ -116,7 +123,7 @@ public class DanhMucDungChungService extends BaseService {
         List<QlnvDanhMuc> data=page.getContent();
 
         String title="Danh sách danh mục dùng chung";
-        String[] rowsName=new String[]{"STT","Vùng dữ liệu/ Loại danh mục dùng chung","Mã","Giá trị","Trạng thái","Người tạo","Ngày tạo","Người sửa","Ngày sửa"};
+        String[] rowsName=new String[]{"STT","Vùng dữ liệu/ Loại danh mục dùng chung","Mã","Giá trị","Trạng thái"};
         String fileName="danh-sach-danh-muc-dung-chung.xlsx";
         List<Object[]> dataList = new ArrayList<Object[]>();
         Object[] objs=null;
@@ -127,11 +134,7 @@ public class DanhMucDungChungService extends BaseService {
             objs[1]=dx.getLoai();
             objs[2]=dx.getMa();
             objs[3]=dx.getGiaTri();
-            objs[4]=dx.getTrangThai();
-            objs[5]=dx.getNguoiTao();
-            objs[6]=dx.getNgayTao();
-            objs[7]=dx.getNguoiSua();
-            objs[8]=dx.getNgaySua();
+            objs[4]=dx.getTenTrangThai();
             dataList.add(objs);
 
         }
