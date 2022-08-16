@@ -3,7 +3,7 @@ package com.tcdt.qlnvcategory.enums;
 public enum QlnvDanhMucEnum {
         HOAT_DONG("01", "Hoạt Động", "Hoạt Động"),
 
-        NGUNG_HOAT_DONG("00", "Ngưng Hoạt Động", "Ngưng Hoạt Động"),
+        NGUNG_HOAT_DONG("00", "Không Hoạt Động", "Không Hoạt Động"),
         ;
 
         private final String id;
